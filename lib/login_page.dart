@@ -8,7 +8,7 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('login page'),
+        title: Text('LOG IN'),
       ),
       body: Center(
         child: ElevatedButton(

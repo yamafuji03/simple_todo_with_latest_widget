@@ -8,7 +8,8 @@ class ListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('todolist page'),
+        title: Text('TODO List'),
+        automaticallyImplyLeading: true, //falseで戻るボタン非表示。あとで大体作ったらfalseにしとく
       ),
     );
   }
