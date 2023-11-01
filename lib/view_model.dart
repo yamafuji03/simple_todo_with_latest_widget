@@ -2,12 +2,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// void firstPage(){if(FirebaseAuth.instance.currentUser == null) {変数==LOGIN PAGE} ELSE {変数==LISTPAGE}}
+String firstPage() {
+  if (FirebaseAuth.instance.currentUser == null) {
+    return '/LoginPage';
+  } else {
+    return '/LoginPage'; //ある程度作ったら、'/ListPage'　に切り変える
+  }
+}
 
-// google sign in でログイン登録
+// google sign inでログイン
 Future<void> signInWithGoogle() async {
   // GoogleSignIn をして得られた情報を Firebase と関連づける
-  final googleUser = await GoogleSignIn(scopes: ['profile', 'email']).signIn();
+  final googleUser =
+      await GoogleSignIn(scopes: ['profile', 'email']) //アプリ登録を考えるとemailだけでいいかも？
+          .signIn();
 
   final googleAuth = await googleUser?.authentication;
   final credential = GoogleAuthProvider.credential(
@@ -16,5 +24,7 @@ Future<void> signInWithGoogle() async {
   );
 
   await FirebaseAuth.instance.signInWithCredential(credential);
+  // googleユーザーネーム表示
   print('ユーザー情報:${FirebaseAuth.instance.currentUser?.displayName}');
+  print('ユーザー情報:${FirebaseAuth.instance.currentUser?.email}');
 }

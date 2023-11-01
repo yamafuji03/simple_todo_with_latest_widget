@@ -9,7 +9,7 @@ import 'package:simple_todo_with_latest_widget/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// hooksを使う場合とhooksリバポを使う場合どっちのwidgetか忘れた
+import 'package:simple_todo_with_latest_widget/view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +24,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = GoRouter(initialLocation: '/LoginPage', routes: [
+    final router = GoRouter(initialLocation: firstPage(), routes: [
       //    GoRoute(path: '/遷移先のクラス名', builder: (context, state) => 遷移先のクラス名),
       GoRoute(path: '/LoginPage', builder: (context, state) => LoginPage()),
 
       GoRoute(path: '/ListPage', builder: (context, state) => ListPage()),
-      // GoRoute(path: '/c', builder: (context, state) => PageC()),
     ]);
 
     return MaterialApp.router(
