@@ -11,15 +11,22 @@ class LoginPage extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LOG IN'),
+        title: Text('LOG Page'),
       ),
       body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              signInWithGoogle();
-              context.push('/ListPage');
-            },
-            child: Text('Google Sign In')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Sign up!', style: TextStyle(fontSize: 20)),
+            SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () {
+                  signInWithGoogle();
+                  context.push('/ListPage');
+                },
+                child: Text('Google Sign In')),
+          ],
+        ),
       ),
     );
   }
