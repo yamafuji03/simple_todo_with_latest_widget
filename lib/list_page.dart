@@ -10,8 +10,8 @@ class ListPage extends ConsumerWidget {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('user')
-            .doc('email')
-            .collection('todo')
+            .doc('yamafuji03@gmail.com')
+            .collection('list')
             .orderBy('order')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -31,7 +31,24 @@ class ListPage extends ConsumerWidget {
                   )
                 : ListView.builder(
                     itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (BuildContext context, int index) {}),
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(snapshot.data!.docs[index]['text']),
+                        subtitle: Text(
+                            'order番号:${snapshot.data!.docs[index]['order'].toString()}'),
+                      );
+                    }),
+            floatingActionButton: FloatingActionButton(onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('user')
+                  .doc('yamafuji03@gmail.com')
+                  .collection('list')
+                  .doc()
+                  .set({
+                'text': 'テスト',
+                'order': 0,
+              });
+            }),
           );
         });
   }
