@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/variable_function.dart';
 import 'package:simple_todo_with_latest_widget/view_model.dart';
 
 class LoginPage extends HookWidget {
@@ -22,6 +24,19 @@ class LoginPage extends HookWidget {
             ElevatedButton(
                 onPressed: () {
                   signInWithGoogle();
+                  final randomId =
+                      makeRandomId(FirebaseAuth.instance.currentUser!);
+                  FirebaseFirestore.instance
+                      .collection('user')
+                      .doc(FirebaseAuth.instance.currentUser!.email)
+                      .set({
+                    "registerDate": Timestamp.now(),
+                    'uid': randomId,
+                    'email': FirebaseAuth.instance.currentUser!.email,
+                    'done': false,
+                    'createdAt': 
+                  });
+
                   context.push('/ListPage');
                 },
                 child: Text('Google Sign In')),
