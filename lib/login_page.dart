@@ -22,19 +22,16 @@ class LoginPage extends HookWidget {
             Text('Sign up!', style: TextStyle(fontSize: 20)),
             SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () {
-                  signInWithGoogle();
-                  final randomId =
-                      makeRandomId(FirebaseAuth.instance.currentUser!);
+                onPressed: () async {
+                  await signInWithGoogle();
+
                   FirebaseFirestore.instance
                       .collection('user')
                       .doc(FirebaseAuth.instance.currentUser!.email)
                       .set({
                     "registerDate": Timestamp.now(),
-                    'uid': randomId,
+                    'uid': FirebaseAuth.instance.currentUser!.uid,
                     'email': FirebaseAuth.instance.currentUser!.email,
-                    'done': false,
-                    'createdAt': 
                   });
 
                   context.push('/ListPage');
