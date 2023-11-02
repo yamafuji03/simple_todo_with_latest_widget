@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ListPage extends ConsumerWidget {
@@ -7,10 +9,14 @@ class ListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+  final newItem = useState('');
+
+
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('user')
-            .doc('yamafuji03@gmail.com')
+            .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
             .orderBy('order')
             .snapshots(),
@@ -30,24 +36,69 @@ class ListPage extends ConsumerWidget {
                     width: 50,
                   )
                 : ListView.builder(
+                    // ここのsnapshotはstreamで範囲が狭まれた物を対象としてるからいつもと同じ感じでおｋ
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (BuildContext context, int index) {
+                      DocumentSnapshot doc = snapshot.data!.docs[index];
                       return ListTile(
-                        title: Text(snapshot.data!.docs[index]['text']),
-                        subtitle: Text(
-                            'order番号:${snapshot.data!.docs[index]['order'].toString()}'),
+                        title: Text(doc['text']),
+                        subtitle: Text('order番号:${doc['order'].toString()}'),
                       );
                     }),
             floatingActionButton: FloatingActionButton(onPressed: () {
-              FirebaseFirestore.instance
+ showDialog(
+      // おまじない
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            // ウインドウ左上に表示させるもの
+            title: Text("Create mode"),
+            // 内容入力
+            content: TextField(
+              onChanged: (newtext) {
+                newItem = newtext;
+              },
+            ),
+            actions: [
+              // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
+              TextButton(
+                  child: Text("Cancel"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                 
+ final randomId =
+                          Model.instance.makeRandomId(Model.instance.user);
+   FirebaseFirestore.instance
                   .collection('user')
-                  .doc('yamafuji03@gmail.com')
+                  .doc(FirebaseAuth.instance.currentUser!.email)
                   .collection('list')
-                  .doc()
+                          .doc(randomId)
+         
                   .set({
-                'text': 'テスト',
-                'order': 0,
+                "item": newItem,
+                        'id': randomId,
+                        'order': snapshot.data!.docs.length,
+                        'done': false,
+                        'createdAt': Timestamp.now()
               });
+
+                      });
+                    }
+                    ;
+                    Navigator.pop(context);
+                  })
+            ]);
+      });
+
+
+
+
+
+           
             }),
           );
         });
