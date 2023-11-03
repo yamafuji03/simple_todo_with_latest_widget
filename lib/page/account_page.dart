@@ -36,7 +36,7 @@ class accountPage extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 60),
             Column(
               children: [
                 ElevatedButton(
@@ -45,7 +45,17 @@ class accountPage extends StatelessWidget {
                     'Sign out?',
                     style: TextStyle(fontSize: 30),
                   ),
-                )
+                ),
+                SizedBox(height: 50),
+                Text(
+                  'or',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 50),
+                ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: Icon(Icons.face),
+                    label: Text('Delete your account?'))
               ],
             ),
           ],
