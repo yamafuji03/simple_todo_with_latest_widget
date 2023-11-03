@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:simple_todo_with_latest_widget/page/login_page.dart';
 
 class accountPage extends StatelessWidget {
   const accountPage({super.key});
@@ -40,11 +43,17 @@ class accountPage extends StatelessWidget {
             Column(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
                   child: Text(
                     'Sign out?',
                     style: TextStyle(fontSize: 30),
                   ),
+                  onPressed: () async {
+                    // Sign Out from Google
+                    await GoogleSignIn().signOut();
+                    // sign out from firebase
+                    // await FirebaseAuth.instance.signOut();
+                    await context.push('/LoginPage');
+                  },
                 ),
                 SizedBox(height: 50),
                 Text(
@@ -53,9 +62,9 @@ class accountPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
                 ElevatedButton.icon(
-                    onPressed: () {},
                     icon: Icon(Icons.face),
-                    label: Text('Delete your account?'))
+                    label: Text('Delete your account?'),
+                    onPressed: () {})
               ],
             ),
           ],
