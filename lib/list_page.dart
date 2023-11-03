@@ -24,8 +24,33 @@ class ListPage extends HookConsumerWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text('TODO List'),
-              automaticallyImplyLeading:
-                  true, //falseで戻るボタン非表示。あとで大体作ったらfalseにしとく
+              actions: [
+                IconButton(onPressed: () {}, icon: Icon(Icons.person_sharp))
+              ],
+
+              // //falseで戻るボタン非表示。
+              // automaticallyImplyLeading: true,
+            ),
+            drawer: Drawer(
+              child: Column(
+                children: [
+                  Container(
+                    height: 80,
+                    child: DrawerHeader(
+                      child: Text("Menu"),
+                      decoration: BoxDecoration(
+                          // color: Colors.orange,
+                          ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Archive'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
             ),
             body: !snapshot.hasData
                 ? const SizedBox(
@@ -254,6 +279,7 @@ class ListPage extends HookConsumerWidget {
                           ));
                     }),
             floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
               onPressed: () {
                 showDialog(
                     // おまじない
