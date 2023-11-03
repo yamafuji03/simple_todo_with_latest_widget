@@ -25,13 +25,29 @@ class LoginPage extends HookWidget {
                 onPressed: () async {
                   await signInWithGoogle();
 
-                  FirebaseFirestore.instance
+                  await FirebaseFirestore.instance
                       .collection('user')
                       .doc(FirebaseAuth.instance.currentUser!.email)
                       .set({
                     "registerDate": Timestamp.now(),
                     'uid': FirebaseAuth.instance.currentUser!.uid,
                     'email': FirebaseAuth.instance.currentUser!.email,
+                  });
+                  final randomId =
+                      makeRandomId(FirebaseAuth.instance.currentUser!);
+
+                  await FirebaseFirestore.instance
+                      .collection('user')
+                      .doc(FirebaseAuth.instance.currentUser!.email)
+                      .collection('list')
+                      .doc(randomId)
+                      .set({
+                    "item": 'テスト',
+                    'id': randomId,
+                    'listOrder': 0,
+                    'archiveOrder': 0,
+                    'done': false,
+                    'createdAt': Timestamp.now()
                   });
 
                   context.push('/ListPage');

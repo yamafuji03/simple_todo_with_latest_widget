@@ -19,8 +19,8 @@ class ListPage extends HookConsumerWidget {
             .collection('user')
             .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
-            // .where('done', isEqualTo: false)
             .orderBy('listOrder')
+            // .where('done', isEqualTo: false)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return Scaffold(
@@ -71,12 +71,8 @@ class ListPage extends HookConsumerWidget {
               ),
             ),
             body: !snapshot.hasData
-                ? const SizedBox(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    height: 50,
-                    width: 50,
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
                 : ReorderableListView.builder(
                     onReorder: (int oldIndex, int newIndex) {
