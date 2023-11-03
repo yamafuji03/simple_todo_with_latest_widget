@@ -51,7 +51,7 @@ class archivePage extends HookConsumerWidget {
                             .doc(moveId)
                             .update({
                           // newIndexだと最大値プラス１が取れてしまうため、マイナス１で移動先リストと同じindexになるように調整
-                          'listOrder': newIndex - 1,
+                          'archiveOrder': newIndex - 1,
                         });
 
                         // ここでforでそれ以外のorderをマイナス１にする
@@ -68,7 +68,7 @@ class archivePage extends HookConsumerWidget {
                                 .doc(otherId)
                                 .update({
                               // orderをi-1にして選択されていないリストの中にあるorderを１ずらす
-                              'listOrder': i - 1,
+                              'archiveOrder': i - 1,
                             });
                           }
                         }
@@ -89,7 +89,7 @@ class archivePage extends HookConsumerWidget {
                                 .collection('list')
                                 .doc(otherId)
                                 .update({
-                              'listOrder': i + 1,
+                              'archiveOrder': i + 1,
                             });
                           }
                         }
@@ -100,7 +100,7 @@ class archivePage extends HookConsumerWidget {
                             .doc(moveId)
                             .update({
                           // newIndexをそのままorder番号にする
-                          'listOrder': newIndex,
+                          'archiveOrder': newIndex,
                         });
                       }
                     },
@@ -155,7 +155,7 @@ class archivePage extends HookConsumerWidget {
                                           .id) //ここは１個から全てのドキュメントを更新していくため、
                                       // 変数doc（指定したドキュメント）「 DocumentSnapshot doc = snapshot.data!.docs[index];」は使用できないため、フルで全部書く
                                       .update({
-                                    'listOrder': i,
+                                    'archiveOrder': i,
                                   });
                                 }
                               }
@@ -171,7 +171,7 @@ class archivePage extends HookConsumerWidget {
                               ),
 
                               // order確認のために使用
-                              // Text('Order :${snapshot.data!.docs[index]['listOrder'].toString()}'),
+                              // Text('Order :${snapshot.data!.docs[index]['archiveOrder'].toString()}'),
                             ),
                           ));
                     }),
