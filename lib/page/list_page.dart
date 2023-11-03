@@ -19,7 +19,8 @@ class ListPage extends HookConsumerWidget {
             .collection('user')
             .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
-            .orderBy('order')
+            .where('done', isEqualTo: false)
+            .orderBy('listOrder')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return Scaffold(
@@ -70,12 +71,8 @@ class ListPage extends HookConsumerWidget {
               ),
             ),
             body: !snapshot.hasData
-                ? const SizedBox(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    height: 50,
-                    width: 50,
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
                 : ReorderableListView.builder(
                     onReorder: (int oldIndex, int newIndex) {
@@ -89,7 +86,7 @@ class ListPage extends HookConsumerWidget {
                             .doc(moveId)
                             .update({
                           // newIndexだと最大値プラス１が取れてしまうため、マイナス１で移動先リストと同じindexになるように調整
-                          'order': newIndex - 1,
+                          'listOrder': newIndex - 1,
                         });
 
                         // ここでforでそれ以外のorderをマイナス１にする
@@ -106,7 +103,7 @@ class ListPage extends HookConsumerWidget {
                                 .doc(otherId)
                                 .update({
                               // orderをi-1にして選択されていないリストの中にあるorderを１ずらす
-                              'order': i - 1,
+                              'listOrder': i - 1,
                             });
                           }
                         }
@@ -127,7 +124,7 @@ class ListPage extends HookConsumerWidget {
                                 .collection('list')
                                 .doc(otherId)
                                 .update({
-                              'order': i + 1,
+                              'listOrder': i + 1,
                             });
                           }
                         }
@@ -138,7 +135,7 @@ class ListPage extends HookConsumerWidget {
                             .doc(moveId)
                             .update({
                           // newIndexをそのままorder番号にする
-                          'order': newIndex,
+                          'listOrder': newIndex,
                         });
                       }
                     },
@@ -193,7 +190,7 @@ class ListPage extends HookConsumerWidget {
                                           .id) //ここは１個から全てのドキュメントを更新していくため、
                                       // 変数doc（指定したドキュメント）「 DocumentSnapshot doc = snapshot.data!.docs[index];」は使用できないため、フルで全部書く
                                       .update({
-                                    'order': i,
+                                    'listOrder': i,
                                   });
                                 }
                               }
@@ -209,7 +206,7 @@ class ListPage extends HookConsumerWidget {
                               ),
 
                               // order確認のために使用
-                              // Text('Order :${snapshot.data!.docs[index]['order'].toString()}'),
+                              // Text('Order :${snapshot.data!.docs[index]['listOrder'].toString()}'),
 
                               trailing: Wrap(
                                 children: [
@@ -336,7 +333,8 @@ class ListPage extends HookConsumerWidget {
                                     .set({
                                   "item": newItem.value,
                                   'id': randomId,
-                                  'order': snapshot.data!.docs.length,
+                                  'listOrder': snapshot.data!.docs.length,
+                                  'archiveOrder': snapshot.data!.docs.length,
                                   'done': false,
                                   'createdAt': Timestamp.now()
                                 });
