@@ -26,7 +26,11 @@ class ListPage extends HookConsumerWidget {
             appBar: AppBar(
               title: Text('TODO List'),
               actions: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.person_sharp))
+                IconButton(
+                    onPressed: () {
+                      context.push('/accountPage');
+                    },
+                    icon: Icon(Icons.person_sharp))
               ],
 
               // //falseで戻るボタン非表示。
@@ -51,8 +55,7 @@ class ListPage extends HookConsumerWidget {
                         ListTile(
                           title: Text('Archive'),
                           onTap: () {
-                            // ここにアーカイブ用のページを作成し飛ぶ
-                            context.pop();
+                            context.push('/archivePage');
                           },
                         ),
                       ],

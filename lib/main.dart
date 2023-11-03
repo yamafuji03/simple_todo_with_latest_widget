@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/firebase_options.dart';
-import 'package:simple_todo_with_latest_widget/page/archive.dart';
+import 'package:simple_todo_with_latest_widget/page/account_page.dart';
+import 'package:simple_todo_with_latest_widget/page/archive_page.dart';
 import 'package:simple_todo_with_latest_widget/page/list_page.dart';
 import 'package:simple_todo_with_latest_widget/page/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
 
       GoRoute(path: '/ListPage', builder: (context, state) => ListPage()),
       GoRoute(path: '/archivePage', builder: (context, state) => archivePage()),
+      GoRoute(path: '/accountPage', builder: (context, state) => accountPage()),
     ]);
 
     return MaterialApp.router(
