@@ -17,7 +17,7 @@ class archivePage extends HookConsumerWidget {
             .collection('user')
             .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
-            // .where('done', isEqualTo: true)
+            .where('done', isEqualTo: true)
             .orderBy('archiveOrder')
             .snapshots(),
         builder: ((context, snapshot) {

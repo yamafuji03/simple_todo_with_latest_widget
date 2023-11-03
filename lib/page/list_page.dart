@@ -19,8 +19,8 @@ class ListPage extends HookConsumerWidget {
             .collection('user')
             .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
+            .where('done', isEqualTo: false)
             .orderBy('listOrder')
-            // .where('done', isEqualTo: false)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return Scaffold(
