@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_todo_with_latest_widget/variable_function.dart';
@@ -34,21 +35,34 @@ class ListPage extends HookConsumerWidget {
             drawer: Drawer(
               child: Column(
                 children: [
-                  Container(
-                    height: 80,
-                    child: DrawerHeader(
-                      child: Text("Menu"),
-                      decoration: BoxDecoration(
-                          // color: Colors.orange,
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          child: DrawerHeader(
+                            child: Text(
+                              "Menu",
+                            ),
+                            decoration: BoxDecoration(),
                           ),
+                        ),
+                        ListTile(
+                          title: Text('Archive'),
+                          onTap: () {
+                            // ここにアーカイブ用のページを作成し飛ぶ
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  ListTile(
-                    title: Text('Archive'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+                  TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: Text('Close'))
                 ],
               ),
             ),
