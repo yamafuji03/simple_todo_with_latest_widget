@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/variable_function.dart';
+import 'package:simple_todo_with_latest_widget/model/variable_function.dart';
 
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
@@ -52,7 +52,7 @@ class ListPage extends HookConsumerWidget {
                           title: Text('Archive'),
                           onTap: () {
                             // ここにアーカイブ用のページを作成し飛ぶ
-                            Navigator.pop(context);
+                            context.pop();
                           },
                         ),
                       ],
@@ -196,99 +196,102 @@ class ListPage extends HookConsumerWidget {
                               }
                             }
                           },
-                          child: ListTile(
-                            // それぞのdocumentに入ってるのitemの中身を表示
-                            title: Text(doc["item"]),
-                            subtitle: Text(
-                              '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
-                              style: TextStyle(fontSize: 11),
-                            ),
+                          child: Card(
+                            child: ListTile(
+                              // それぞのdocumentに入ってるのitemの中身を表示
+                              title: Text(doc["item"]),
+                              subtitle: Text(
+                                '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
+                                style: TextStyle(fontSize: 11),
+                              ),
 
-                            // order確認のために使用
-                            // Text('Order :${snapshot.data!.docs[index]['order'].toString()}'),
+                              // order確認のために使用
+                              // Text('Order :${snapshot.data!.docs[index]['order'].toString()}'),
 
-                            trailing: Wrap(
-                              children: [
-                                IconButton(
+                              trailing: Wrap(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            // おまじない
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                  // ウインドウ左上に表示させるもの
+                                                  title: Text("Edit mode"),
+                                                  // 内容入力
+                                                  content: TextField(
+                                                    onChanged: (newText) {
+                                                      newItem.value = newText;
+                                                    },
+                                                  ),
+                                                  // ボタン。任意。
+                                                  actions: [
+                                                    // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
+                                                    TextButton(
+                                                        child: Text("Cancel"),
+                                                        onPressed: () {
+                                                          context.pop();
+                                                        }),
+                                                    TextButton(
+                                                        child: Text("OK"),
+                                                        onPressed: () {
+                                                          if (newItem.value !=
+                                                              "") {
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'user')
+                                                                .doc(FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser!
+                                                                    .email)
+                                                                .collection(
+                                                                    'list')
+                                                                .doc(doc.id)
+                                                                .update({
+                                                              "item":
+                                                                  newItem.value,
+                                                              'done': false,
+                                                              'createdAt':
+                                                                  Timestamp
+                                                                      .now()
+                                                            });
+                                                          }
+                                                          ;
+                                                          context.pop();
+                                                        })
+                                                  ]);
+                                            });
+                                      },
+                                      icon: Icon(Icons.edit)),
+                                  IconButton(
                                     onPressed: () {
-                                      showDialog(
-                                          // おまじない
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                                // ウインドウ左上に表示させるもの
-                                                title: Text("Edit mode"),
-                                                // 内容入力
-                                                content: TextField(
-                                                  onChanged: (newText) {
-                                                    newItem.value = newText;
-                                                  },
-                                                ),
-                                                // ボタン。任意。
-                                                actions: [
-                                                  // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
-                                                  TextButton(
-                                                      child: Text("Cancel"),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      }),
-                                                  TextButton(
-                                                      child: Text("OK"),
-                                                      onPressed: () {
-                                                        if (newItem.value !=
-                                                            "") {
-                                                          FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'user')
-                                                              .doc(FirebaseAuth
-                                                                  .instance
-                                                                  .currentUser!
-                                                                  .email)
-                                                              .collection(
-                                                                  'list')
-                                                              .doc(doc.id)
-                                                              .update({
-                                                            "item":
-                                                                newItem.value,
-                                                            'done': false,
-                                                            'createdAt':
-                                                                Timestamp.now()
-                                                          });
-                                                        }
-                                                        ;
-                                                        Navigator.pop(context);
-                                                      })
-                                                ]);
-                                          });
+                                      if (doc['done'] == false) {
+                                        FirebaseFirestore.instance
+                                            .collection('user')
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.email)
+                                            .collection('list')
+                                            .doc(doc.id)
+                                            .update({'done': true});
+                                      } else {
+                                        FirebaseFirestore.instance
+                                            .collection('user')
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.email)
+                                            .collection('list')
+                                            .doc(doc.id)
+                                            .update({'done': false});
+                                      }
                                     },
-                                    icon: Icon(Icons.edit)),
-                                IconButton(
-                                  onPressed: () {
-                                    if (doc['done'] == false) {
-                                      FirebaseFirestore.instance
-                                          .collection('user')
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser!.email)
-                                          .collection('list')
-                                          .doc(doc.id)
-                                          .update({'done': true});
-                                    } else {
-                                      FirebaseFirestore.instance
-                                          .collection('user')
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser!.email)
-                                          .collection('list')
-                                          .doc(doc.id)
-                                          .update({'done': false});
-                                    }
-                                  },
-                                  icon: doc['done'] == true
-                                      ? Icon(Icons.check,
-                                          color: Colors.blue.shade500)
-                                      : Icon(Icons.check),
-                                ),
-                              ],
+                                    icon: doc['done'] == true
+                                        ? Icon(Icons.check,
+                                            color: Colors.blue.shade500)
+                                        : Icon(Icons.check),
+                                  ),
+                                ],
+                              ),
                             ),
                           ));
                     }),
@@ -313,7 +316,7 @@ class ListPage extends HookConsumerWidget {
                             TextButton(
                                 child: Text("Cancel"),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  context.pop();
                                 }),
                             TextButton(
                               child: Text("OK"),
@@ -334,7 +337,7 @@ class ListPage extends HookConsumerWidget {
                                   'done': false,
                                   'createdAt': Timestamp.now()
                                 });
-                                Navigator.pop(context);
+                                context.pop();
                               },
                             ),
                           ]);
