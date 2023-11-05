@@ -109,25 +109,36 @@ Your all lists will be deleted.'''),
                                               }),
                                           TextButton(
                                               child: Text("OK"),
-                                              onPressed: () {
-                                                // // write if (true) {below} else{return}
-                                                // if (isChanged == true) {
-                                                //   FirebaseFirestore.instance
-                                                //       .collection('user')
-                                                //       .doc(FirebaseAuth.instance
-                                                //           .currentUser!.email)
-                                                //       .delete();
-                                                //   // return loginPage
-                                                //   context.push('/LoginPage');
-                                                // }
-
-                                                FirebaseFirestore.instance
+                                              onPressed: () async {
+                                                // wrap up later
+                                                // delete each of documents in list
+                                                await FirebaseFirestore.instance
                                                     .collection('user')
                                                     .doc(FirebaseAuth.instance
                                                         .currentUser!.email)
                                                     .collection('list')
-                                                    .doc()
+                                                    .get()
+                                                    .asStream()
+                                                    .forEach((element) {
+                                                  for (var element
+                                                      in element.docs) {
+                                                    element.reference.delete();
+                                                  }
+                                                });
+                                                await FirebaseFirestore.instance
+                                                    .collection('user')
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.email)
                                                     .delete();
+
+                                                // there are two below. make func later or find out the cause of probmen
+
+                                                // Sign Out from Google
+                                                await GoogleSignIn().signOut();
+                                                // sign out from firebase
+                                                // get to error below
+                                                // await FirebaseAuth.instance
+                                                //     .signOut();
 
                                                 // return loginPage
                                                 context.push('/LoginPage');
