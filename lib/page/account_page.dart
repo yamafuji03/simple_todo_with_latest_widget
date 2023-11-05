@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class accountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isChanged = false;
     return Scaffold(
       appBar: AppBar(
         title: Text('Account Page'),
@@ -87,9 +89,9 @@ Your all lists will be deleted.'''),
                                         children: [
                                           // it might be changed. good for now
                                           Checkbox(
-                                            value: false,
+                                            value: isChanged,
                                             onChanged: (value) {
-                                              true != value;
+                                              isChanged != value;
                                             },
                                           ),
                                           Text(
@@ -108,7 +110,26 @@ Your all lists will be deleted.'''),
                                           TextButton(
                                               child: Text("OK"),
                                               onPressed: () {
-                                                // write if (true) {below} else{return}
+                                                // // write if (true) {below} else{return}
+                                                // if (isChanged == true) {
+                                                //   FirebaseFirestore.instance
+                                                //       .collection('user')
+                                                //       .doc(FirebaseAuth.instance
+                                                //           .currentUser!.email)
+                                                //       .delete();
+                                                //   // return loginPage
+                                                //   context.push('/LoginPage');
+                                                // }
+
+                                                FirebaseFirestore.instance
+                                                    .collection('user')
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.email)
+                                                    .collection('list')
+                                                    .doc()
+                                                    .delete();
+
+                                                // return loginPage
                                                 context.push('/LoginPage');
                                               }),
                                         ],
