@@ -70,73 +70,82 @@ class accountPage extends StatelessWidget {
                           // おまじない
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
-                                // ウインドウ左上に表示させるもの
-                                title: Text(
-                                  'Delete Account Mode',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                // 内容入力
-                                content: Text('''You can't undo the action.
+                            // might take away 　Statefulbuilder when refactoring with riverpod
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return AlertDialog(
+                                  // ウインドウ左上に表示させるもの
+                                  title: Text(
+                                    'Delete Account Mode',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  // 内容入力
+                                  content: Text('''You can't undo the action.
 Your all lists will be deleted.'''),
-                                actions: [
-                                  Column(
-                                    children: [
-                                      Row(
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.start,
-                                        children: [
-                                          //  it seemes acceptable if pop out from here.
-                                          Checkbox(
-                                            value: isChanged,
-                                            onChanged: (value) {
-                                              isChanged != value;
-                                            },
-                                          ),
-                                          Text('Yes, I will delete my account'),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          TextButton(
-                                              child: Text("Cancel"),
-                                              onPressed: () {
-                                                context.pop();
-                                              }),
-                                          TextButton(
-                                              child: Text("OK"),
-                                              onPressed: () async {
-                                                // wrap up later with if statement after making switch
-                                                // delete each of documents in list
-                                                await FirebaseFirestore.instance
-                                                    .collection('user')
-                                                    .doc(FirebaseAuth.instance
-                                                        .currentUser!.email)
-                                                    .collection('list')
-                                                    .get()
-                                                    .asStream()
-                                                    .forEach((element) {
-                                                  for (var element
-                                                      in element.docs) {
-                                                    element.reference.delete();
-                                                  }
+                                  actions: [
+                                    Column(
+                                      children: [
+                                        Row(
+                                          // mainAxisAlignment:
+                                          //     MainAxisAlignment.start,
+                                          children: [
+                                            Checkbox(
+                                              value: isChanged,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  isChanged != value;
                                                 });
-                                                // delete email document
-                                                await FirebaseFirestore.instance
-                                                    .collection('user')
-                                                    .doc(FirebaseAuth.instance
-                                                        .currentUser!.email)
-                                                    .delete();
-                                                await signOut();
-                                                context.go('/LoginPage');
-                                              }),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ]);
+                                              },
+                                            ),
+                                            Text(
+                                                'Yes, I will delete my account'),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(
+                                                child: Text("Cancel"),
+                                                onPressed: () {
+                                                  context.pop();
+                                                }),
+                                            TextButton(
+                                                child: Text("OK"),
+                                                onPressed: () async {
+                                                  // wrap up later with if statement after making switch
+                                                  // delete each of documents in list
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('user')
+                                                      .doc(FirebaseAuth.instance
+                                                          .currentUser!.email)
+                                                      .collection('list')
+                                                      .get()
+                                                      .asStream()
+                                                      .forEach((element) {
+                                                    for (var element
+                                                        in element.docs) {
+                                                      element.reference
+                                                          .delete();
+                                                    }
+                                                  });
+                                                  // delete email document
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('user')
+                                                      .doc(FirebaseAuth.instance
+                                                          .currentUser!.email)
+                                                      .delete();
+                                                  await signOut();
+                                                  context.go('/LoginPage');
+                                                }),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ]);
+                            });
                           });
                     })
               ],
