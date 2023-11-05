@@ -85,6 +85,7 @@ Your all lists will be deleted.'''),
                                         // mainAxisAlignment:
                                         //     MainAxisAlignment.start,
                                         children: [
+                                          // it might be changed. good for now
                                           Checkbox(
                                             value: false,
                                             onChanged: (value) {
@@ -95,7 +96,6 @@ Your all lists will be deleted.'''),
                                               'Yes, I want to delete my account'),
                                         ],
                                       ),
-                                      // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -103,12 +103,13 @@ Your all lists will be deleted.'''),
                                           TextButton(
                                               child: Text("Cancel"),
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                context.pop();
                                               }),
                                           TextButton(
                                               child: Text("OK"),
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                // write if (true) {below} else{return}
+                                                context.push('/LoginPage');
                                               }),
                                         ],
                                       ),
