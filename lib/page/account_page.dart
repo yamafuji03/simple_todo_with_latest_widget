@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:simple_todo_with_latest_widget/page/login_page.dart';
-import 'package:simple_todo_with_latest_widget/view_model/account_page_view_model';
+import 'package:simple_todo_with_latest_widget/view_model/account_page_view_model.dart';
 
 class accountPage extends StatelessWidget {
   const accountPage({super.key});

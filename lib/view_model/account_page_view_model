@@ -1,6 +1,0 @@
-Future<void> signOut() async {
-  // sign out from firebase
-await FirebaseAuth.instance.signOut();
-  // Sign Out from Google
-await GoogleSignIn().signOut();
-}
