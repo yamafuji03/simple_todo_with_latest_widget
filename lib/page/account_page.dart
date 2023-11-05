@@ -110,7 +110,7 @@ Your all lists will be deleted.'''),
                                           TextButton(
                                               child: Text("OK"),
                                               onPressed: () async {
-                                                // wrap up later
+                                                // wrap up later aa
                                                 // delete each of documents in list
                                                 await FirebaseFirestore.instance
                                                     .collection('user')
