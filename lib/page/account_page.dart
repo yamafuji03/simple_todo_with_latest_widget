@@ -72,7 +72,7 @@ class accountPage extends HookConsumerWidget {
                           // おまじない
                           context: context,
                           builder: (context) {
-                            // might take away Statefulbuilder when refactoring with riverpod
+                            // might take away Statefulbuilder below when refactoring with riverpod
                             return StatefulBuilder(
                                 builder: (context, setState) {
                               return AlertDialog(
