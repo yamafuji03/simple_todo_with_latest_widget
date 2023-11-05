@@ -31,7 +31,7 @@ class ListPage extends HookConsumerWidget {
                     onPressed: () {
                       context.push('/accountPage');
                     },
-                    icon: Icon(Icons.person_sharp))
+                    icon: Icon(Icons.settings))
               ],
             ),
             drawer: Drawer(

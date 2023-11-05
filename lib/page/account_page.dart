@@ -64,7 +64,59 @@ class accountPage extends StatelessWidget {
                 ElevatedButton.icon(
                     icon: Icon(Icons.face),
                     label: Text('Delete your account?'),
-                    onPressed: () {})
+                    onPressed: () {
+                      showDialog(
+                          // おまじない
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                                // ウインドウ左上に表示させるもの
+                                title: Text(
+                                  'Delete Account Mode',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                // 内容入力
+                                content: Text('''You can't undo the action.
+Your all lists will be deleted.'''),
+                                actions: [
+                                  Column(
+                                    children: [
+                                      Row(
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.start,
+                                        children: [
+                                          Checkbox(
+                                            value: false,
+                                            onChanged: (value) {
+                                              true != value;
+                                            },
+                                          ),
+                                          Text(
+                                              'Yes, I want to delete my account'),
+                                        ],
+                                      ),
+                                      // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                              child: Text("Cancel"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }),
+                                          TextButton(
+                                              child: Text("OK"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              }),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ]);
+                          });
+                    })
               ],
             ),
           ],
