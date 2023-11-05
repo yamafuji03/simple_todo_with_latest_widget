@@ -94,8 +94,7 @@ Your all lists will be deleted.'''),
                                               isChanged != value;
                                             },
                                           ),
-                                          Text(
-                                              'Yes, I want to delete my account'),
+                                          Text('Yes, I will delete my account'),
                                         ],
                                       ),
                                       Row(
@@ -110,7 +109,7 @@ Your all lists will be deleted.'''),
                                           TextButton(
                                               child: Text("OK"),
                                               onPressed: () async {
-                                                // wrap up later
+                                                // wrap up later with if statement
                                                 // delete each of documents in list
                                                 await FirebaseFirestore.instance
                                                     .collection('user')
@@ -125,6 +124,7 @@ Your all lists will be deleted.'''),
                                                     element.reference.delete();
                                                   }
                                                 });
+                                                // delete email document
                                                 await FirebaseFirestore.instance
                                                     .collection('user')
                                                     .doc(FirebaseAuth.instance
