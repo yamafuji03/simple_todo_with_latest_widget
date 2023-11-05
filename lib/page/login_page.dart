@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/model/variable_function.dart';
-import 'package:simple_todo_with_latest_widget/view_model/view_model.dart';
+import 'package:simple_todo_with_latest_widget/view_model/login_page_view_model.dart';
 
 class LoginPage extends HookWidget {
   const LoginPage({super.key});

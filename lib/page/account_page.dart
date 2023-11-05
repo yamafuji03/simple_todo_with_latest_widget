@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:simple_todo_with_latest_widget/page/login_page.dart';
+import 'package:simple_todo_with_latest_widget/view_model/account_page_view_model';
 
 class accountPage extends StatelessWidget {
   const accountPage({super.key});
@@ -50,11 +51,9 @@ class accountPage extends StatelessWidget {
                     style: TextStyle(fontSize: 30),
                   ),
                   onPressed: () async {
-                    // Sign Out from Google
-                    await GoogleSignIn().signOut();
                     // sign out from firebase
-                    // await FirebaseAuth.instance.signOut();
-                    await context.push('/LoginPage');
+                    await signOut();
+                    context.go('/LoginPage');
                   },
                 ),
                 SizedBox(height: 50),
@@ -87,7 +86,7 @@ Your all lists will be deleted.'''),
                                         // mainAxisAlignment:
                                         //     MainAxisAlignment.start,
                                         children: [
-                                          // it might be changed. good for now
+                                          //  it seemes acceptable if pop out from here.
                                           Checkbox(
                                             value: isChanged,
                                             onChanged: (value) {
@@ -109,7 +108,7 @@ Your all lists will be deleted.'''),
                                           TextButton(
                                               child: Text("OK"),
                                               onPressed: () async {
-                                                // wrap up later with if statement
+                                                // wrap up later with if statement after making switch
                                                 // delete each of documents in list
                                                 await FirebaseFirestore.instance
                                                     .collection('user')
@@ -130,18 +129,8 @@ Your all lists will be deleted.'''),
                                                     .doc(FirebaseAuth.instance
                                                         .currentUser!.email)
                                                     .delete();
-
-                                                // there are two below. make func later or find out the cause of probmen
-
-                                                // Sign Out from Google
-                                                await GoogleSignIn().signOut();
-                                                // sign out from firebase
-                                                // get to error below
-                                                // await FirebaseAuth.instance
-                                                //     .signOut();
-
-                                                // return loginPage
-                                                context.push('/LoginPage');
+                                                await signOut();
+                                                context.go('/LoginPage');
                                               }),
                                         ],
                                       ),

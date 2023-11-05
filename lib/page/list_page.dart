@@ -17,7 +17,7 @@ class ListPage extends HookConsumerWidget {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('user')
-            .doc(FirebaseAuth.instance.currentUser!.email!)
+            .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
             .where('done', isEqualTo: false)
             .orderBy('listOrder')
