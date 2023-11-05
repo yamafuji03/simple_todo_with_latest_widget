@@ -25,15 +25,8 @@ class archivePage extends HookConsumerWidget {
             appBar: AppBar(
               title: Text('Archive'),
               actions: [
-                IconButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    icon: Icon(Icons.person_sharp))
+                // add switch button to change archiveOrder to CreatedAt
               ],
-
-              // //falseで戻るボタン非表示。
-              // automaticallyImplyLeading: true,
             ),
             body: !snapshot.hasData
                 ? Center(
