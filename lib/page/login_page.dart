@@ -24,7 +24,7 @@ class LoginPage extends HookWidget {
             ElevatedButton(
                 onPressed: () async {
                   await signInWithGoogle();
-
+                  // initial list
                   await FirebaseFirestore.instance
                       .collection('user')
                       .doc(FirebaseAuth.instance.currentUser!.email)
