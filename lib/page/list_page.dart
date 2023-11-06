@@ -204,7 +204,6 @@ class ListPage extends HookConsumerWidget {
                                   .update({
                                 'done': true,
                                 'listOrder': -1,
-                                // // 'archiveOrder': snapshot.data!.docs.length,
                                 'archiveDate': Timestamp.now(),
                               });
                             }
