@@ -146,15 +146,18 @@ class ListPage extends HookConsumerWidget {
                           key: Key(doc.id),
                           // 左から右にスワイプしたときの背景（削除）
                           background: Container(
-                            color: Colors.red,
-                            child: Icon(Icons.delete),
+                            color: Colors.green,
+                            child: Icon(Icons.archive),
                             alignment: Alignment.centerLeft,
                           ),
-                          // 右にスワイプしかさせない設定
-                          direction: DismissDirection.startToEnd,
+                          secondaryBackground: Container(
+                            color: Colors.red,
+                            child: Icon(Icons.delete),
+                            alignment: Alignment.centerRight,
+                          ),
                           onDismissed: (direction) {
-                            // スワイプ方向が左から右の場合の処理
-                            if (direction == DismissDirection.startToEnd) {
+                            // swipe from right to left. throw away list
+                            if (direction == DismissDirection.endToStart) {
                               // ランダムに生成したドキュメントIDを取得
                               final fieldId = doc.id;
                               // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
@@ -192,6 +195,17 @@ class ListPage extends HookConsumerWidget {
                                 }
                               }
                             }
+                            // swipe from left to right. archive
+                            if (direction == DismissDirection.startToEnd) {
+                              FirebaseFirestore.instance
+                                  .collection('user')
+                                  .doc(FirebaseAuth.instance.currentUser!.email)
+                                  .collection('list')
+                                  .doc(doc.id)
+                                  .update({'done': true});
+
+                              // make logic of archiveOrder and let list thrown away as number minus 1 about listOrder
+                            }
                           },
                           child: Card(
                             child: ListTile(
@@ -222,7 +236,6 @@ class ListPage extends HookConsumerWidget {
                                                       newItem.value = newText;
                                                     },
                                                   ),
-                                                  // ボタン。任意。
                                                   actions: [
                                                     // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
                                                     TextButton(
@@ -263,6 +276,10 @@ class ListPage extends HookConsumerWidget {
                                       },
                                       icon: Icon(Icons.edit)),
                                   IconButton(
+                                    icon: doc['done'] == true
+                                        ? Icon(Icons.check,
+                                            color: Colors.blue.shade500)
+                                        : Icon(Icons.check),
                                     onPressed: () {
                                       if (doc['done'] == false) {
                                         FirebaseFirestore.instance
@@ -282,10 +299,6 @@ class ListPage extends HookConsumerWidget {
                                             .update({'done': false});
                                       }
                                     },
-                                    icon: doc['done'] == true
-                                        ? Icon(Icons.check,
-                                            color: Colors.blue.shade500)
-                                        : Icon(Icons.check),
                                   ),
                                 ],
                               ),
