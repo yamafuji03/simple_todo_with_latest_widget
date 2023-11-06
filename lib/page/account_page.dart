@@ -93,7 +93,7 @@ Your all lists will be deleted.'''),
                                           children: [
                                             Checkbox(
                                               value: isChanged,
-                                              onChanged: (value) {
+                                              onChanged: (_) {
                                                 // might take away 　Statefulbuilder when refactoring with riverpod
 
                                                 setState(() {
