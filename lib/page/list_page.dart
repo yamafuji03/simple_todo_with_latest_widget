@@ -144,7 +144,6 @@ class ListPage extends HookConsumerWidget {
                       return Dismissible(
                           // ドキュメントIDの特定し、リストの特定をするdocIDを取得
                           key: Key(doc.id),
-                          // 左から右にスワイプしたときの背景（削除）
                           background: Container(
                             color: Colors.green,
                             child: Icon(Icons.archive),
@@ -237,7 +236,6 @@ class ListPage extends HookConsumerWidget {
                                                     },
                                                   ),
                                                   actions: [
-                                                    // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
                                                     TextButton(
                                                         child: Text("Cancel"),
                                                         onPressed: () {
