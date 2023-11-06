@@ -162,6 +162,33 @@ class archivePage extends HookConsumerWidget {
                                 '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
                                 style: TextStyle(fontSize: 11),
                               ),
+                              trailing: Wrap(children: [
+                                IconButton(
+                                  icon: doc['check'] == true
+                                      ? Icon(Icons.check,
+                                          color: Colors.blue.shade500)
+                                      : Icon(Icons.check),
+                                  onPressed: () {
+                                    if (doc['check'] == false) {
+                                      FirebaseFirestore.instance
+                                          .collection('user')
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.email)
+                                          .collection('list')
+                                          .doc(doc.id)
+                                          .update({'check': true});
+                                    } else {
+                                      FirebaseFirestore.instance
+                                          .collection('user')
+                                          .doc(FirebaseAuth
+                                              .instance.currentUser!.email)
+                                          .collection('list')
+                                          .doc(doc.id)
+                                          .update({'check': false});
+                                    }
+                                  },
+                                ),
+                              ]),
 
                               // order確認のために使用
                               // Text('Order :${snapshot.data!.docs[index]['archiveOrder'].toString()}'),

@@ -47,7 +47,8 @@ class LoginPage extends HookWidget {
                     'listOrder': 0,
                     'archiveOrder': 0,
                     'done': false,
-                    'createdAt': Timestamp.now()
+                    'createdAt': Timestamp.now(),
+                    'check': false,
                   });
 
                   context.push('/ListPage');
