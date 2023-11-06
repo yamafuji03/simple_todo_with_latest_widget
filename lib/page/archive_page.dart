@@ -18,7 +18,7 @@ class archivePage extends HookConsumerWidget {
             .doc(FirebaseAuth.instance.currentUser!.email)
             .collection('list')
             .where('done', isEqualTo: true)
-            .orderBy('archiveOrder')
+            .orderBy('archiveDate')
             .snapshots(),
         builder: ((context, snapshot) {
           return Scaffold(
@@ -159,7 +159,7 @@ class archivePage extends HookConsumerWidget {
                               // それぞのdocumentに入ってるのitemの中身を表示
                               title: Text(doc["item"]),
                               subtitle: Text(
-                                '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
+                                'Archived at ${DateFormat('yyyy/MM/dd HH:mm').format(doc['archiveDate'].toDate())}',
                                 style: TextStyle(fontSize: 11),
                               ),
                               trailing: Wrap(children: [

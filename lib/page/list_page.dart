@@ -205,6 +205,7 @@ class ListPage extends HookConsumerWidget {
                                 'done': true,
                                 'listOrder': -1,
                                 'archiveOrder': snapshot.data!.docs.length,
+                                'archiveDate': Timestamp.now(),
                               });
                             }
                           },
@@ -347,6 +348,7 @@ class ListPage extends HookConsumerWidget {
                                   'done': false,
                                   'createdAt': Timestamp.now(),
                                   'check': false,
+                                  'archiveDate': Timestamp.now(),
                                 });
                                 context.pop();
                               },
