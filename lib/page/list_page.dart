@@ -201,15 +201,10 @@ class ListPage extends HookConsumerWidget {
                                   .doc(FirebaseAuth.instance.currentUser!.email)
                                   .collection('list')
                                   .doc(doc.id)
-                                  .update({'done': true});
-                              // change listOrder number to minus 1
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(doc.id)
                                   .update({
+                                'done': true,
                                 'listOrder': -1,
+                                'archiveOrder': snapshot.data!.docs.length,
                               });
                             }
                           },
