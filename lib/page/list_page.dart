@@ -204,7 +204,7 @@ class ListPage extends HookConsumerWidget {
                                   .update({
                                 'done': true,
                                 'listOrder': -1,
-                                'archiveOrder': snapshot.data!.docs.length,
+                                // 'archiveOrder': snapshot.data!.docs.length,
                                 'archiveDate': Timestamp.now(),
                               });
                             }
@@ -344,7 +344,7 @@ class ListPage extends HookConsumerWidget {
                                   "item": newItem.value,
                                   'id': randomId,
                                   'listOrder': snapshot.data!.docs.length,
-                                  'archiveOrder': snapshot.data!.docs.length,
+                                  // 'archiveOrder': snapshot.data!.docs.length,
                                   'done': false,
                                   'createdAt': Timestamp.now(),
                                   'check': false,
