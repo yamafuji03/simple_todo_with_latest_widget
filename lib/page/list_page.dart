@@ -260,7 +260,6 @@ class ListPage extends HookConsumerWidget {
                                                                 .update({
                                                               "item":
                                                                   newItem.value,
-                                                              'done': false,
                                                               'createdAt':
                                                                   Timestamp
                                                                       .now()
@@ -274,19 +273,19 @@ class ListPage extends HookConsumerWidget {
                                       },
                                       icon: Icon(Icons.edit)),
                                   IconButton(
-                                    icon: doc['done'] == true
+                                    icon: doc['check'] == true
                                         ? Icon(Icons.check,
                                             color: Colors.blue.shade500)
                                         : Icon(Icons.check),
                                     onPressed: () {
-                                      if (doc['done'] == false) {
+                                      if (doc['check'] == false) {
                                         FirebaseFirestore.instance
                                             .collection('user')
                                             .doc(FirebaseAuth
                                                 .instance.currentUser!.email)
                                             .collection('list')
                                             .doc(doc.id)
-                                            .update({'done': true});
+                                            .update({'check': true});
                                       } else {
                                         FirebaseFirestore.instance
                                             .collection('user')
@@ -294,7 +293,7 @@ class ListPage extends HookConsumerWidget {
                                                 .instance.currentUser!.email)
                                             .collection('list')
                                             .doc(doc.id)
-                                            .update({'done': false});
+                                            .update({'check': false});
                                       }
                                     },
                                   ),
@@ -344,7 +343,8 @@ class ListPage extends HookConsumerWidget {
                                   'listOrder': snapshot.data!.docs.length,
                                   'archiveOrder': snapshot.data!.docs.length,
                                   'done': false,
-                                  'createdAt': Timestamp.now()
+                                  'createdAt': Timestamp.now(),
+                                  'check': false,
                                 });
                                 context.pop();
                               },
