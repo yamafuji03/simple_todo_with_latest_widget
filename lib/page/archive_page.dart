@@ -37,15 +37,31 @@ class archivePage extends HookConsumerWidget {
                           key: Key(doc.id),
                           // 左から右にスワイプしたときの背景（削除）
                           background: Container(
-                            color: Colors.red,
-                            child: Icon(Icons.delete),
+                            color: Colors.blue,
+                            child: Icon(Icons.restore_from_trash),
                             alignment: Alignment.centerLeft,
                           ),
-                          // 右にスワイプしかさせない設定
-                          direction: DismissDirection.startToEnd,
+                          secondaryBackground: Container(
+                            color: Colors.red,
+                            child: Icon(Icons.delete),
+                            alignment: Alignment.centerRight,
+                          ),
                           onDismissed: (direction) {
-                            // スワイプ方向が左から右の場合の処理
+                            // swipe left to right
                             if (direction == DismissDirection.startToEnd) {
+                              // ランダムに生成したドキュメントIDを取得
+                              final fieldId = doc.id;
+                              // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
+                              FirebaseFirestore.instance
+                                  .collection('user')
+                                  .doc(FirebaseAuth.instance.currentUser!.email)
+                                  .collection('list')
+                                  .doc(fieldId)
+                                  .update({'done': false});
+                            }
+
+                            // スワイプ方向が左から右の場合の処理
+                            if (direction == DismissDirection.endToStart) {
                               // ランダムに生成したドキュメントIDを取得
                               final fieldId = doc.id;
                               // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
