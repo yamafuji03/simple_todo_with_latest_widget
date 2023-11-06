@@ -45,10 +45,10 @@ class LoginPage extends HookWidget {
                     "item": 'テスト',
                     'id': randomId,
                     'listOrder': 0,
-                    'archiveOrder': 0,
                     'done': false,
                     'createdAt': Timestamp.now(),
                     'check': false,
+                    'archiveDate': Timestamp.now(),
                   });
 
                   context.push('/ListPage');

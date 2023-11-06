@@ -201,15 +201,11 @@ class ListPage extends HookConsumerWidget {
                                   .doc(FirebaseAuth.instance.currentUser!.email)
                                   .collection('list')
                                   .doc(doc.id)
-                                  .update({'done': true});
-                              // change listOrder number to minus 1
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(doc.id)
                                   .update({
+                                'done': true,
                                 'listOrder': -1,
+                                // 'archiveOrder': snapshot.data!.docs.length,
+                                'archiveDate': Timestamp.now(),
                               });
                             }
                           },
@@ -348,10 +344,10 @@ class ListPage extends HookConsumerWidget {
                                   "item": newItem.value,
                                   'id': randomId,
                                   'listOrder': snapshot.data!.docs.length,
-                                  'archiveOrder': snapshot.data!.docs.length,
                                   'done': false,
                                   'createdAt': Timestamp.now(),
                                   'check': false,
+                                  'archiveDate': Timestamp.now(),
                                 });
                                 context.pop();
                               },
