@@ -344,7 +344,6 @@ class ListPage extends HookConsumerWidget {
                                   "item": newItem.value,
                                   'id': randomId,
                                   'listOrder': snapshot.data!.docs.length,
-                                  // 'archiveOrder': snapshot.data!.docs.length,
                                   'done': false,
                                   'createdAt': Timestamp.now(),
                                   'check': false,
