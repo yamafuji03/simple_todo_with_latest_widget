@@ -203,7 +203,7 @@ class ListPage extends HookConsumerWidget {
                                   .doc(doc.id)
                                   .update({
                                 'done': true,
-                                'listOrder': -1,
+                                'listOrder': 0,
                                 'archiveDate': Timestamp.now(),
                               });
                             }
