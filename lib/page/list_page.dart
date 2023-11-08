@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/model/variable_function.dart';
+import 'package:simple_todo_with_latest_widget/variable_function.dart';
 
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
