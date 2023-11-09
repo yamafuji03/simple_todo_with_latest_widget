@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_todo_with_latest_widget/model/list_page_riverpod.dart';
-import 'package:simple_todo_with_latest_widget/model/variable_function.dart';
+import 'package:simple_todo_with_latest_widget/model/common_model.dart';
 
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
@@ -24,8 +24,6 @@ class ListPage extends HookConsumerWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text('TODO List'),
-              // title: Text(ref.watch(newtextProvider)),
-
               actions: [
                 IconButton(
                     onPressed: () {
