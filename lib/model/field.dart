@@ -23,13 +23,3 @@ class NewList with _$NewList {
 
 
 
-// 上の雛形とpartを描いた後、下のコマンドでgファイルを生成する。 watchは更新されたらその都度書き直してくれる。delete-conflicting-outputsは古いファイルを自動削除してくれるコマンド
-// flutter pub run build_runner watch --delete-conflicting-outputs
-
-
-// // 使い方
-// // １、インスタンスの生成
-// var NewList = NewList(name: "Suzuki")
-
-// // ２、使う
-// text('${NewList.name}')//インスタンス名.変数名
