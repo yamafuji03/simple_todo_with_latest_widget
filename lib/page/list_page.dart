@@ -1,19 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/model/variable_function.dart';
+import 'package:simple_todo_with_latest_widget/model/list_page_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/model/common_model.dart';
 
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final newItem = useState('');
-
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('user')
@@ -234,7 +232,10 @@ class ListPage extends HookConsumerWidget {
                                                   // 内容入力
                                                   content: TextField(
                                                     onChanged: (newText) {
-                                                      newItem.value = newText;
+                                                      ref
+                                                          .watch(newtextProvider
+                                                              .notifier)
+                                                          .changeText(newText);
                                                     },
                                                   ),
                                                   actions: [
@@ -246,7 +247,8 @@ class ListPage extends HookConsumerWidget {
                                                     TextButton(
                                                         child: Text("OK"),
                                                         onPressed: () {
-                                                          if (newItem.value !=
+                                                          if (ref.watch(
+                                                                  newtextProvider) !=
                                                               "") {
                                                             FirebaseFirestore
                                                                 .instance
@@ -260,8 +262,8 @@ class ListPage extends HookConsumerWidget {
                                                                     'list')
                                                                 .doc(doc.id)
                                                                 .update({
-                                                              "item":
-                                                                  newItem.value,
+                                                              "item": ref.watch(
+                                                                  newtextProvider),
                                                               'createdAt':
                                                                   Timestamp
                                                                       .now()
@@ -317,11 +319,12 @@ class ListPage extends HookConsumerWidget {
                           // 内容入力
                           content: TextField(
                             onChanged: (newtext) {
-                              newItem.value = newtext;
+                              ref
+                                  .watch(newtextProvider.notifier)
+                                  .changeText(newtext);
                             },
                           ),
                           actions: [
-                            // 「Navigator.pop(context);」は何も起きないで暗くなったページが元に戻る
                             TextButton(
                                 child: Text("Cancel"),
                                 onPressed: () {
@@ -340,7 +343,7 @@ class ListPage extends HookConsumerWidget {
                                     .collection('list')
                                     .doc(randomId)
                                     .set({
-                                  "item": newItem.value,
+                                  "item": ref.watch(newtextProvider),
                                   'id': randomId,
                                   'listOrder': snapshot.data!.docs.length,
                                   'done': false,
