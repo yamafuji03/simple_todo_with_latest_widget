@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/model/common_model.dart';
+import 'package:simple_todo_with_latest_widget/model/field.dart';
 import 'package:simple_todo_with_latest_widget/view_model/login_page_view_model.dart';
 
 class LoginPage extends HookWidget {
@@ -36,20 +37,30 @@ class LoginPage extends HookWidget {
                   final randomId =
                       makeRandomId(FirebaseAuth.instance.currentUser!);
 
+                  final newList = NewList(
+                    item: 'テスト',
+                    randomId: randomId,
+                    listOrder: 0,
+                    done: false,
+                    check: false,
+                    // createdAt: Timestamp.now(),
+                    // archiveDate: Timestamp.now()
+                  ).toJson();
+
                   await FirebaseFirestore.instance
                       .collection('user')
                       .doc(FirebaseAuth.instance.currentUser!.email)
                       .collection('list')
                       .doc(randomId)
-                      .set({
-                    "item": 'テスト',
-                    'id': randomId,
-                    'listOrder': 0,
-                    'done': false,
-                    'createdAt': Timestamp.now(),
-                    'check': false,
-                    'archiveDate': Timestamp.now(),
-                  });
+                      .set(newList
+                          // "item": 'テスト',
+                          // 'id': randomId,
+                          // 'listOrder': 0,
+                          // 'done': false,
+                          // 'createdAt': Timestamp.now(),
+                          // 'check': false,
+                          // 'archiveDate': Timestamp.now(),
+                          );
 
                   context.push('/ListPage');
                 },
