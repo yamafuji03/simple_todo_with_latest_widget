@@ -52,15 +52,7 @@ class LoginPage extends HookWidget {
                       .doc(FirebaseAuth.instance.currentUser!.email)
                       .collection('list')
                       .doc(randomId)
-                      .set(newList
-                          // "item": 'テスト',
-                          // 'id': randomId,
-                          // 'listOrder': 0,
-                          // 'done': false,
-                          // 'createdAt': Timestamp.now(),
-                          // 'check': false,
-                          // 'archiveDate': Timestamp.now(),
-                          );
+                      .set(newList);
 
                   context.push('/ListPage');
                 },
