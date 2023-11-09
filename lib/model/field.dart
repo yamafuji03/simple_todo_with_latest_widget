@@ -7,8 +7,7 @@ part 'field.g.dart';
 class NewList with _$NewList {
   @JsonSerializable(explicitToJson: true)
   const factory NewList({
-    // この下に欲しい変数を書く
-// 名前
+
 
     required String item,
     required String randomId,
@@ -16,7 +15,7 @@ class NewList with _$NewList {
     required bool done,
     required bool check,
   }) = _NewList;
-// to/fromJsonを使うためのコマンド
+
   factory NewList.fromJson(Map<String, dynamic> json) =>
       _$NewListFromJson(json);
 }
