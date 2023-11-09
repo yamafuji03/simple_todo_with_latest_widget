@@ -210,8 +210,9 @@ class ListPage extends HookConsumerWidget {
                             child: ListTile(
                               // それぞのdocumentに入ってるのitemの中身を表示
                               title: Text(doc["item"]),
+                              // subtitle:    '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}'),
                               subtitle: Text(
-                                '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
+                                '${DateFormat('yyyy/MM/dd HH:mm').format(DateTime.parse(doc['createdAt']))}',
                                 style: TextStyle(fontSize: 11),
                               ),
 

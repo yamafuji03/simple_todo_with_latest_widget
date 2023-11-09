@@ -43,8 +43,8 @@ class LoginPage extends HookWidget {
                     listOrder: 0,
                     done: false,
                     check: false,
-                    // createdAt: Timestamp.now(),
-                    // archiveDate: Timestamp.now()
+                    createdAt: DateTime.now(),
+                    archiveDate: DateTime.now(),
                   ).toJson();
 
                   await FirebaseFirestore.instance

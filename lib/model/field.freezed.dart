@@ -20,13 +20,15 @@ NewList _$NewListFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NewList {
-// この下に欲しい変数を書く
-// 名前
   String get item => throw _privateConstructorUsedError;
   String get randomId => throw _privateConstructorUsedError;
   int get listOrder => throw _privateConstructorUsedError;
   bool get done => throw _privateConstructorUsedError;
   bool get check => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get archiveDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,7 +41,13 @@ abstract class $NewListCopyWith<$Res> {
       _$NewListCopyWithImpl<$Res, NewList>;
   @useResult
   $Res call(
-      {String item, String randomId, int listOrder, bool done, bool check});
+      {String item,
+      String randomId,
+      int listOrder,
+      bool done,
+      bool check,
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? archiveDate});
 }
 
 /// @nodoc
@@ -60,6 +68,8 @@ class _$NewListCopyWithImpl<$Res, $Val extends NewList>
     Object? listOrder = null,
     Object? done = null,
     Object? check = null,
+    Object? createdAt = freezed,
+    Object? archiveDate = freezed,
   }) {
     return _then(_value.copyWith(
       item: null == item
@@ -82,6 +92,14 @@ class _$NewListCopyWithImpl<$Res, $Val extends NewList>
           ? _value.check
           : check // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      archiveDate: freezed == archiveDate
+          ? _value.archiveDate
+          : archiveDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -94,7 +112,13 @@ abstract class _$$NewListImplCopyWith<$Res> implements $NewListCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String item, String randomId, int listOrder, bool done, bool check});
+      {String item,
+      String randomId,
+      int listOrder,
+      bool done,
+      bool check,
+      @TimestampConverter() DateTime? createdAt,
+      @TimestampConverter() DateTime? archiveDate});
 }
 
 /// @nodoc
@@ -113,6 +137,8 @@ class __$$NewListImplCopyWithImpl<$Res>
     Object? listOrder = null,
     Object? done = null,
     Object? check = null,
+    Object? createdAt = freezed,
+    Object? archiveDate = freezed,
   }) {
     return _then(_$NewListImpl(
       item: null == item
@@ -135,6 +161,14 @@ class __$$NewListImplCopyWithImpl<$Res>
           ? _value.check
           : check // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      archiveDate: freezed == archiveDate
+          ? _value.archiveDate
+          : archiveDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -144,31 +178,42 @@ class __$$NewListImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$NewListImpl implements _NewList {
   const _$NewListImpl(
-      {required this.item,
-      required this.randomId,
-      required this.listOrder,
-      required this.done,
-      required this.check});
+      {this.item = '',
+      this.randomId = '',
+      this.listOrder = 0,
+      this.done = false,
+      this.check = false,
+      @TimestampConverter() this.createdAt,
+      @TimestampConverter() this.archiveDate});
 
   factory _$NewListImpl.fromJson(Map<String, dynamic> json) =>
       _$$NewListImplFromJson(json);
 
-// この下に欲しい変数を書く
-// 名前
   @override
+  @JsonKey()
   final String item;
   @override
+  @JsonKey()
   final String randomId;
   @override
+  @JsonKey()
   final int listOrder;
   @override
+  @JsonKey()
   final bool done;
   @override
+  @JsonKey()
   final bool check;
+  @override
+  @TimestampConverter()
+  final DateTime? createdAt;
+  @override
+  @TimestampConverter()
+  final DateTime? archiveDate;
 
   @override
   String toString() {
-    return 'NewList(item: $item, randomId: $randomId, listOrder: $listOrder, done: $done, check: $check)';
+    return 'NewList(item: $item, randomId: $randomId, listOrder: $listOrder, done: $done, check: $check, createdAt: $createdAt, archiveDate: $archiveDate)';
   }
 
   @override
@@ -182,13 +227,17 @@ class _$NewListImpl implements _NewList {
             (identical(other.listOrder, listOrder) ||
                 other.listOrder == listOrder) &&
             (identical(other.done, done) || other.done == done) &&
-            (identical(other.check, check) || other.check == check));
+            (identical(other.check, check) || other.check == check) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.archiveDate, archiveDate) ||
+                other.archiveDate == archiveDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, item, randomId, listOrder, done, check);
+  int get hashCode => Object.hash(runtimeType, item, randomId, listOrder, done,
+      check, createdAt, archiveDate);
 
   @JsonKey(ignore: true)
   @override
@@ -206,16 +255,17 @@ class _$NewListImpl implements _NewList {
 
 abstract class _NewList implements NewList {
   const factory _NewList(
-      {required final String item,
-      required final String randomId,
-      required final int listOrder,
-      required final bool done,
-      required final bool check}) = _$NewListImpl;
+      {final String item,
+      final String randomId,
+      final int listOrder,
+      final bool done,
+      final bool check,
+      @TimestampConverter() final DateTime? createdAt,
+      @TimestampConverter() final DateTime? archiveDate}) = _$NewListImpl;
 
   factory _NewList.fromJson(Map<String, dynamic> json) = _$NewListImpl.fromJson;
 
-  @override // この下に欲しい変数を書く
-// 名前
+  @override
   String get item;
   @override
   String get randomId;
@@ -225,6 +275,12 @@ abstract class _NewList implements NewList {
   bool get done;
   @override
   bool get check;
+  @override
+  @TimestampConverter()
+  DateTime? get createdAt;
+  @override
+  @TimestampConverter()
+  DateTime? get archiveDate;
   @override
   @JsonKey(ignore: true)
   _$$NewListImplCopyWith<_$NewListImpl> get copyWith =>
