@@ -1,15 +1,5 @@
-// go_routerでinitialページ
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-String firstPage() {
-  if (FirebaseAuth.instance.currentUser == null) {
-    return '/LoginPage';
-  } else {
-    return '/ListPage'; //ある程度作ったら、'/ListPage'　に切り変える
-    // return '/LoginPage';
-  }
-}
+import 'package:firebase_auth/firebase_auth.dart';
 
 // google sign inでログイン
 Future<void> signInWithGoogle() async {
@@ -28,4 +18,12 @@ Future<void> signInWithGoogle() async {
   // googleユーザーネーム表示
   print('ユーザー情報:${FirebaseAuth.instance.currentUser?.displayName}');
   print('ユーザー情報:${FirebaseAuth.instance.currentUser?.email}');
+}
+
+// signOut from firebase and google
+Future<void> signOut() async {
+  // sign out from firebase
+  await FirebaseAuth.instance.signOut();
+  // Sign Out from Google
+  await GoogleSignIn().signOut();
 }
