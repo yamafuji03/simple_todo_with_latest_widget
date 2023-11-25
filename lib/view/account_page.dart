@@ -6,10 +6,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:simple_todo_with_latest_widget/page/login_page.dart';
-import 'package:simple_todo_with_latest_widget/view_model/account_page_view_model.dart';
-
-import 'package:simple_todo_with_latest_widget/view_model/riverpod/account_page_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/auth.dart';
+import 'package:simple_todo_with_latest_widget/view/login_page.dart';
 
 class accountPage extends HookConsumerWidget {
   const accountPage({super.key});
@@ -18,13 +16,13 @@ class accountPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChanged = false;
     return Scaffold(
-      appBar: AppBar(title: Text(ref.watch(appbarTitleProvider))),
+      appBar: AppBar(title: Text('Account Page')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              ref.watch(accountNameProvider),
+              'You are logging in:',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 20),

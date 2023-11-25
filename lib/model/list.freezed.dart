@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'field.dart';
+part of 'list.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,17 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-NewList _$NewListFromJson(Map<String, dynamic> json) {
-  return _NewList.fromJson(json);
+List _$ListFromJson(Map<String, dynamic> json) {
+  return _List.fromJson(json);
 }
 
 /// @nodoc
-mixin _$NewList {
-  String get item => throw _privateConstructorUsedError;
-  String get randomId => throw _privateConstructorUsedError;
-  int get listOrder => throw _privateConstructorUsedError;
-  bool get done => throw _privateConstructorUsedError;
-  bool get check => throw _privateConstructorUsedError;
+mixin _$List {
+  String? get item => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  int? get listOrder => throw _privateConstructorUsedError;
+  bool? get done => throw _privateConstructorUsedError;
+  bool? get check => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -32,28 +32,28 @@ mixin _$NewList {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $NewListCopyWith<NewList> get copyWith => throw _privateConstructorUsedError;
+  $ListCopyWith<List> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NewListCopyWith<$Res> {
-  factory $NewListCopyWith(NewList value, $Res Function(NewList) then) =
-      _$NewListCopyWithImpl<$Res, NewList>;
+abstract class $ListCopyWith<$Res> {
+  factory $ListCopyWith(List value, $Res Function(List) then) =
+      _$ListCopyWithImpl<$Res, List>;
   @useResult
   $Res call(
-      {String item,
-      String randomId,
-      int listOrder,
-      bool done,
-      bool check,
+      {String? item,
+      String? id,
+      int? listOrder,
+      bool? done,
+      bool? check,
       @TimestampConverter() DateTime? createdAt,
       @TimestampConverter() DateTime? archiveDate});
 }
 
 /// @nodoc
-class _$NewListCopyWithImpl<$Res, $Val extends NewList>
-    implements $NewListCopyWith<$Res> {
-  _$NewListCopyWithImpl(this._value, this._then);
+class _$ListCopyWithImpl<$Res, $Val extends List>
+    implements $ListCopyWith<$Res> {
+  _$ListCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,35 +63,35 @@ class _$NewListCopyWithImpl<$Res, $Val extends NewList>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? item = null,
-    Object? randomId = null,
-    Object? listOrder = null,
-    Object? done = null,
-    Object? check = null,
+    Object? item = freezed,
+    Object? id = freezed,
+    Object? listOrder = freezed,
+    Object? done = freezed,
+    Object? check = freezed,
     Object? createdAt = freezed,
     Object? archiveDate = freezed,
   }) {
     return _then(_value.copyWith(
-      item: null == item
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as String,
-      randomId: null == randomId
-          ? _value.randomId
-          : randomId // ignore: cast_nullable_to_non_nullable
-              as String,
-      listOrder: null == listOrder
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      listOrder: freezed == listOrder
           ? _value.listOrder
           : listOrder // ignore: cast_nullable_to_non_nullable
-              as int,
-      done: null == done
+              as int?,
+      done: freezed == done
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
-              as bool,
-      check: null == check
+              as bool?,
+      check: freezed == check
           ? _value.check
           : check // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -105,62 +105,61 @@ class _$NewListCopyWithImpl<$Res, $Val extends NewList>
 }
 
 /// @nodoc
-abstract class _$$NewListImplCopyWith<$Res> implements $NewListCopyWith<$Res> {
-  factory _$$NewListImplCopyWith(
-          _$NewListImpl value, $Res Function(_$NewListImpl) then) =
-      __$$NewListImplCopyWithImpl<$Res>;
+abstract class _$$ListImplCopyWith<$Res> implements $ListCopyWith<$Res> {
+  factory _$$ListImplCopyWith(
+          _$ListImpl value, $Res Function(_$ListImpl) then) =
+      __$$ListImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String item,
-      String randomId,
-      int listOrder,
-      bool done,
-      bool check,
+      {String? item,
+      String? id,
+      int? listOrder,
+      bool? done,
+      bool? check,
       @TimestampConverter() DateTime? createdAt,
       @TimestampConverter() DateTime? archiveDate});
 }
 
 /// @nodoc
-class __$$NewListImplCopyWithImpl<$Res>
-    extends _$NewListCopyWithImpl<$Res, _$NewListImpl>
-    implements _$$NewListImplCopyWith<$Res> {
-  __$$NewListImplCopyWithImpl(
-      _$NewListImpl _value, $Res Function(_$NewListImpl) _then)
+class __$$ListImplCopyWithImpl<$Res>
+    extends _$ListCopyWithImpl<$Res, _$ListImpl>
+    implements _$$ListImplCopyWith<$Res> {
+  __$$ListImplCopyWithImpl(_$ListImpl _value, $Res Function(_$ListImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? item = null,
-    Object? randomId = null,
-    Object? listOrder = null,
-    Object? done = null,
-    Object? check = null,
+    Object? item = freezed,
+    Object? id = freezed,
+    Object? listOrder = freezed,
+    Object? done = freezed,
+    Object? check = freezed,
     Object? createdAt = freezed,
     Object? archiveDate = freezed,
   }) {
-    return _then(_$NewListImpl(
-      item: null == item
+    return _then(_$ListImpl(
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as String,
-      randomId: null == randomId
-          ? _value.randomId
-          : randomId // ignore: cast_nullable_to_non_nullable
-              as String,
-      listOrder: null == listOrder
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      listOrder: freezed == listOrder
           ? _value.listOrder
           : listOrder // ignore: cast_nullable_to_non_nullable
-              as int,
-      done: null == done
+              as int?,
+      done: freezed == done
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
-              as bool,
-      check: null == check
+              as bool?,
+      check: freezed == check
           ? _value.check
           : check // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -174,36 +173,30 @@ class __$$NewListImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-@JsonSerializable(explicitToJson: true)
-class _$NewListImpl implements _NewList {
-  const _$NewListImpl(
-      {this.item = '',
-      this.randomId = '',
-      this.listOrder = 0,
-      this.done = false,
-      this.check = false,
+@JsonSerializable()
+class _$ListImpl implements _List {
+  const _$ListImpl(
+      {this.item,
+      this.id,
+      this.listOrder,
+      this.done,
+      this.check,
       @TimestampConverter() this.createdAt,
       @TimestampConverter() this.archiveDate});
 
-  factory _$NewListImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NewListImplFromJson(json);
+  factory _$ListImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ListImplFromJson(json);
 
   @override
-  @JsonKey()
-  final String item;
+  final String? item;
   @override
-  @JsonKey()
-  final String randomId;
+  final String? id;
   @override
-  @JsonKey()
-  final int listOrder;
+  final int? listOrder;
   @override
-  @JsonKey()
-  final bool done;
+  final bool? done;
   @override
-  @JsonKey()
-  final bool check;
+  final bool? check;
   @override
   @TimestampConverter()
   final DateTime? createdAt;
@@ -213,17 +206,16 @@ class _$NewListImpl implements _NewList {
 
   @override
   String toString() {
-    return 'NewList(item: $item, randomId: $randomId, listOrder: $listOrder, done: $done, check: $check, createdAt: $createdAt, archiveDate: $archiveDate)';
+    return 'List(item: $item, id: $id, listOrder: $listOrder, done: $done, check: $check, createdAt: $createdAt, archiveDate: $archiveDate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NewListImpl &&
+            other is _$ListImpl &&
             (identical(other.item, item) || other.item == item) &&
-            (identical(other.randomId, randomId) ||
-                other.randomId == randomId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.listOrder, listOrder) ||
                 other.listOrder == listOrder) &&
             (identical(other.done, done) || other.done == done) &&
@@ -236,45 +228,45 @@ class _$NewListImpl implements _NewList {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, item, randomId, listOrder, done,
-      check, createdAt, archiveDate);
+  int get hashCode => Object.hash(
+      runtimeType, item, id, listOrder, done, check, createdAt, archiveDate);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$NewListImplCopyWith<_$NewListImpl> get copyWith =>
-      __$$NewListImplCopyWithImpl<_$NewListImpl>(this, _$identity);
+  _$$ListImplCopyWith<_$ListImpl> get copyWith =>
+      __$$ListImplCopyWithImpl<_$ListImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NewListImplToJson(
+    return _$$ListImplToJson(
       this,
     );
   }
 }
 
-abstract class _NewList implements NewList {
-  const factory _NewList(
-      {final String item,
-      final String randomId,
-      final int listOrder,
-      final bool done,
-      final bool check,
+abstract class _List implements List {
+  const factory _List(
+      {final String? item,
+      final String? id,
+      final int? listOrder,
+      final bool? done,
+      final bool? check,
       @TimestampConverter() final DateTime? createdAt,
-      @TimestampConverter() final DateTime? archiveDate}) = _$NewListImpl;
+      @TimestampConverter() final DateTime? archiveDate}) = _$ListImpl;
 
-  factory _NewList.fromJson(Map<String, dynamic> json) = _$NewListImpl.fromJson;
+  factory _List.fromJson(Map<String, dynamic> json) = _$ListImpl.fromJson;
 
   @override
-  String get item;
+  String? get item;
   @override
-  String get randomId;
+  String? get id;
   @override
-  int get listOrder;
+  int? get listOrder;
   @override
-  bool get done;
+  bool? get done;
   @override
-  bool get check;
+  bool? get check;
   @override
   @TimestampConverter()
   DateTime? get createdAt;
@@ -283,6 +275,6 @@ abstract class _NewList implements NewList {
   DateTime? get archiveDate;
   @override
   @JsonKey(ignore: true)
-  _$$NewListImplCopyWith<_$NewListImpl> get copyWith =>
+  _$$ListImplCopyWith<_$ListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

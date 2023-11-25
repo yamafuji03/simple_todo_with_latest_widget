@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/view_model/common_model.dart';
-import 'package:simple_todo_with_latest_widget/view_model/riverpod/list_page_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
+import 'package:simple_todo_with_latest_widget/ripository/ripository.dart';
+import 'package:simple_todo_with_latest_widget/view/provider.dart';
 
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final viewModelState = ref.watch(ViewModelProvider);
+    final viewModelNotifier = ref.watch(ViewModelProvider.notifier);
+    String newText = '';
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('user')
@@ -152,18 +156,10 @@ class ListPage extends HookConsumerWidget {
                             child: Icon(Icons.delete),
                             alignment: Alignment.centerRight,
                           ),
-                          onDismissed: (direction) {
+                          onDismissed: (direction) async {
                             // swipe from right to left. throw away list
                             if (direction == DismissDirection.endToStart) {
-                              // ランダムに生成したドキュメントIDを取得
-                              final fieldId = doc.id;
-                              // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(fieldId)
-                                  .delete();
+                              await viewModelNotifier.delete(index);
 
                               // documentの個数をリストで取得
                               List<DocumentSnapshot> listDoc =
@@ -230,11 +226,8 @@ class ListPage extends HookConsumerWidget {
                                                   title: Text("Edit mode"),
                                                   // 内容入力
                                                   content: TextField(
-                                                    onChanged: (newText) {
-                                                      ref
-                                                          .watch(newtextProvider
-                                                              .notifier)
-                                                          .changeText(newText);
+                                                    onChanged: (text) {
+                                                      newText = text;
                                                     },
                                                   ),
                                                   actions: [
@@ -246,27 +239,13 @@ class ListPage extends HookConsumerWidget {
                                                     TextButton(
                                                         child: Text("OK"),
                                                         onPressed: () {
-                                                          if (ref.watch(
-                                                                  newtextProvider) !=
-                                                              "") {
-                                                            FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'user')
-                                                                .doc(FirebaseAuth
-                                                                    .instance
-                                                                    .currentUser!
-                                                                    .email)
-                                                                .collection(
-                                                                    'list')
-                                                                .doc(doc.id)
-                                                                .update({
-                                                              "item": ref.watch(
-                                                                  newtextProvider),
-                                                              'createdAt':
-                                                                  Timestamp
-                                                                      .now()
-                                                            });
+                                                          if (newText != "") {
+                                                            viewModelNotifier
+                                                                .upDate(
+                                                                    newText:
+                                                                        newText,
+                                                                    index:
+                                                                        index);
                                                           }
                                                           ;
                                                           context.pop();
@@ -317,10 +296,8 @@ class ListPage extends HookConsumerWidget {
                           title: Text("Create mode"),
                           // 内容入力
                           content: TextField(
-                            onChanged: (newtext) {
-                              ref
-                                  .watch(newtextProvider.notifier)
-                                  .changeText(newtext);
+                            onChanged: (text) {
+                              newText = text;
                             },
                           ),
                           actions: [
@@ -332,24 +309,7 @@ class ListPage extends HookConsumerWidget {
                             TextButton(
                               child: Text("OK"),
                               onPressed: () {
-                                final randomId = makeRandomId(
-                                    FirebaseAuth.instance.currentUser!);
-
-                                FirebaseFirestore.instance
-                                    .collection('user')
-                                    .doc(FirebaseAuth
-                                        .instance.currentUser!.email)
-                                    .collection('list')
-                                    .doc(randomId)
-                                    .set({
-                                  "item": ref.watch(newtextProvider),
-                                  'id': randomId,
-                                  'listOrder': snapshot.data!.docs.length,
-                                  'done': false,
-                                  'createdAt': Timestamp.now(),
-                                  'check': false,
-                                  'archiveDate': Timestamp.now(),
-                                });
+                                viewModelNotifier.add(newText: newText);
                                 context.pop();
                               },
                             ),
