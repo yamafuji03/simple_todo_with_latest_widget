@@ -157,7 +157,8 @@ class ListPage extends HookConsumerWidget {
                           onDismissed: (direction) async {
                             // swipe from right to left. throw away list
                             if (direction == DismissDirection.endToStart) {
-                              await viewModelNotifier.delete(index: index);
+                              await viewModelNotifier.deleteFromList(
+                                  index: index);
 
                               // documentの個数をリストで取得
                               List<DocumentSnapshot> listDoc =
@@ -189,16 +190,6 @@ class ListPage extends HookConsumerWidget {
                             // swipe from left to right. archive
                             if (direction == DismissDirection.startToEnd) {
                               viewModelNotifier.toArchive(index: index);
-                              // FirebaseFirestore.instance
-                              //     .collection('user')
-                              //     .doc(FirebaseAuth.instance.currentUser!.email)
-                              //     .collection('list')
-                              //     .doc(doc.id)
-                              //     .update({
-                              //   'done': true,
-                              //   'listOrder': 0,
-                              //   'archiveDate': Timestamp.now(),
-                              // });
                             }
                           },
                           child: Card(
@@ -259,7 +250,8 @@ class ListPage extends HookConsumerWidget {
                                             color: Colors.blue.shade500)
                                         : Icon(Icons.check),
                                     onPressed: () {
-                                      viewModelNotifier.done(index: index);
+                                      viewModelNotifier.checkFromList(
+                                          index: index);
                                     },
                                   ),
                                 ],

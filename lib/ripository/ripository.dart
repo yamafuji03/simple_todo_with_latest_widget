@@ -7,119 +7,109 @@ import 'package:simple_todo_with_latest_widget/model/list.dart';
 class RepositoryNotifier extends StateNotifier<List> {
   RepositoryNotifier() : super(List());
 
+  final _firestore = FirebaseFirestore.instance
+      .collection('user')
+      .doc(FirebaseAuth.instance.currentUser!.email)
+      .collection('list');
+
   Future<void> add({required String newText}) async {
     // retrieve from CommonFunction
-    final randomId = CommonFunction.makeRandomId();
-    final listOrder = await CommonFunction.listOrderLength();
+    final _randomId = CommonFunction.makeRandomId();
+    final _listOrder = await CommonFunction.listOrderLength();
 
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .doc(randomId)
-        .set(state
-            .copyWith(
-              item: newText,
-              id: randomId,
-              listOrder: listOrder,
-              done: false,
-              createdAt: DateTime.now(),
-              check: false,
-              archiveDate: DateTime.now(),
-            )
-            .toJson());
+    _firestore.doc(_randomId).set(state
+        .copyWith(
+          item: newText,
+          id: _randomId,
+          listOrder: _listOrder,
+          done: false,
+          createdAt: DateTime.now(),
+          check: false,
+          archiveDate: DateTime.now(),
+        )
+        .toJson());
   }
 
   Future<void> upDate({required String newText, required int index}) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
+    final _snapshot = await _firestore
         .orderBy(
             'listOrder') //why is this needed? that is to order lists by ListOrder
         .get();
 
-    final docId = snapshot.docs[index].id;
+    final docId = _snapshot.docs[index].id;
 
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .doc(docId)
-        .update({
+    _firestore.doc(docId).update({
       'item': newText,
       'createdAt': DateTime.now(),
     });
   }
 
-  Future<void> delete({required int index}) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .orderBy('listOrder')
-        .get();
+  Future<void> deleteFromList({required int index}) async {
+    final _snapshot = await _firestore.orderBy('listOrder').get();
 
-    final docId = snapshot.docs[index].id;
+    final docId = _snapshot.docs[index].id;
 
-    // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
-    await FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .doc(docId)
-        .delete();
+    await _firestore.doc(docId).delete();
   }
 
-  Future<void> done({required int index}) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .orderBy('listOrder')
-        .get();
+  Future<void> checkFromList({required int index}) async {
+    final _snapshot = await _firestore.orderBy('listOrder').get();
 
-    final docId = snapshot.docs[index].id;
-    final doc = snapshot.docs[index].data();
+    final docId = _snapshot.docs[index].id;
+    final doc = _snapshot.docs[index].data();
 
     if (doc['check'] == false) {
-      FirebaseFirestore.instance
-          .collection('user')
-          .doc(FirebaseAuth.instance.currentUser!.email)
-          .collection('list')
-          .doc(docId)
-          .update({'check': true});
+      _firestore.doc(docId).update({'check': true});
     } else {
-      FirebaseFirestore.instance
-          .collection('user')
-          .doc(FirebaseAuth.instance.currentUser!.email)
-          .collection('list')
-          .doc(docId)
-          .update({'check': false});
+      _firestore.doc(docId).update({'check': false});
+    }
+  }
+
+  Future<void> checkFromArchive({required int index}) async {
+    final _snapshot = await _firestore
+        .where('done', isEqualTo: true)
+        .orderBy('archiveDate')
+        .get();
+
+    final docId = _snapshot.docs[index].id;
+    final doc = _snapshot.docs[index].data();
+
+    if (doc['check'] == false) {
+      _firestore.doc(docId).update({'check': true});
+    } else {
+      _firestore.doc(docId).update({'check': false});
     }
   }
 
   Future<void> toArchive({required int index}) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .orderBy('listOrder')
-        .get();
+    final _snapshot = await _firestore.orderBy('listOrder').get();
 
-    final docId = snapshot.docs[index].id;
+    final docId = _snapshot.docs[index].id;
 
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.email)
-        .collection('list')
-        .doc(docId)
-        .update({
+    _firestore.doc(docId).update({
       'done': true,
       'listOrder': FieldValue.delete(),
       'archiveDate': DateTime.now(),
     });
   }
 
-  // 次アーカイブからリストに戻すのとアーカイブの中で削除（ソートの仕方が違うため別途作る必要がある）
+  Future<void> toList({required int index}) async {
+    final _snapshot = await _firestore
+        .where('done', isEqualTo: true)
+        .orderBy('archiveDate')
+        .get();
+    final docId = _snapshot.docs[index].id;
+
+    _firestore.doc(docId).update({'listOrder': 0, 'done': false});
+  }
+
+  Future<void> deleteFromArchive({required int index}) async {
+    final _snapshot = await _firestore
+        .where('done', isEqualTo: true)
+        .orderBy('archiveDate')
+        .get();
+    final docId = _snapshot.docs[index].id;
+
+    _firestore.doc(docId).delete();
+  }
 }

@@ -49,33 +49,15 @@ class archivePage extends HookConsumerWidget {
                             child: Icon(Icons.delete),
                             alignment: Alignment.centerRight,
                           ),
-                          onDismissed: (direction) {
+                          onDismissed: (direction) async {
                             // swipe left to right. return to List Page
-                            if (direction == DismissDirection.startToEnd) {
-                              // ランダムに生成したドキュメントIDを取得
-                              final fieldId = doc.id;
-                              // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(fieldId)
-                                  .update({'done': false});
-                            }
+                            viewModelNotifier.toList(index: index);
 
                             // スワイプ方向が左から右の場合の処理
                             if (direction == DismissDirection.endToStart) {
-                              // viewModelNotifier.delete(index: index);
-
-                              // ランダムに生成したドキュメントIDを取得
-                              final fieldId = doc.id;
-                              // Firestoreからfield_idからドキュメントIDを取得してドキュメントを削除
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(fieldId)
-                                  .delete();
+                              // swipe right to left for delete the list
+                              await viewModelNotifier.deleteFromArchive(
+                                  index: index);
                             }
                           },
                           child: Card(
@@ -93,23 +75,8 @@ class archivePage extends HookConsumerWidget {
                                           color: Colors.blue.shade500)
                                       : Icon(Icons.check),
                                   onPressed: () {
-                                    if (doc['check'] == false) {
-                                      FirebaseFirestore.instance
-                                          .collection('user')
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser!.email)
-                                          .collection('list')
-                                          .doc(doc.id)
-                                          .update({'check': true});
-                                    } else {
-                                      FirebaseFirestore.instance
-                                          .collection('user')
-                                          .doc(FirebaseAuth
-                                              .instance.currentUser!.email)
-                                          .collection('list')
-                                          .doc(doc.id)
-                                          .update({'check': false});
-                                    }
+                                    viewModelNotifier.checkFromArchive(
+                                        index: index);
                                   },
                                 ),
                               ]),
