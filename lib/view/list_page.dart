@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
-import 'package:simple_todo_with_latest_widget/ripository/ripository.dart';
 import 'package:simple_todo_with_latest_widget/view/provider.dart';
 
 class ListPage extends HookConsumerWidget {
@@ -13,8 +11,8 @@ class ListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(ViewModelProvider);
-    final viewModelNotifier = ref.watch(ViewModelProvider.notifier);
+    final viewModelState = ref.watch(repositoryProvider);
+    final viewModelNotifier = ref.watch(repositoryProvider.notifier);
     String newText = '';
     return StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -159,7 +157,7 @@ class ListPage extends HookConsumerWidget {
                           onDismissed: (direction) async {
                             // swipe from right to left. throw away list
                             if (direction == DismissDirection.endToStart) {
-                              await viewModelNotifier.delete(index);
+                              await viewModelNotifier.delete(index: index);
 
                               // documentの個数をリストで取得
                               List<DocumentSnapshot> listDoc =
@@ -190,16 +188,17 @@ class ListPage extends HookConsumerWidget {
                             }
                             // swipe from left to right. archive
                             if (direction == DismissDirection.startToEnd) {
-                              FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
-                                  .collection('list')
-                                  .doc(doc.id)
-                                  .update({
-                                'done': true,
-                                'listOrder': 0,
-                                'archiveDate': Timestamp.now(),
-                              });
+                              viewModelNotifier.toArchive(index: index);
+                              // FirebaseFirestore.instance
+                              //     .collection('user')
+                              //     .doc(FirebaseAuth.instance.currentUser!.email)
+                              //     .collection('list')
+                              //     .doc(doc.id)
+                              //     .update({
+                              //   'done': true,
+                              //   'listOrder': 0,
+                              //   'archiveDate': Timestamp.now(),
+                              // });
                             }
                           },
                           child: Card(
@@ -260,23 +259,7 @@ class ListPage extends HookConsumerWidget {
                                             color: Colors.blue.shade500)
                                         : Icon(Icons.check),
                                     onPressed: () {
-                                      if (doc['check'] == false) {
-                                        FirebaseFirestore.instance
-                                            .collection('user')
-                                            .doc(FirebaseAuth
-                                                .instance.currentUser!.email)
-                                            .collection('list')
-                                            .doc(doc.id)
-                                            .update({'check': true});
-                                      } else {
-                                        FirebaseFirestore.instance
-                                            .collection('user')
-                                            .doc(FirebaseAuth
-                                                .instance.currentUser!.email)
-                                            .collection('list')
-                                            .doc(doc.id)
-                                            .update({'check': false});
-                                      }
+                                      viewModelNotifier.done(index: index);
                                     },
                                   ),
                                 ],

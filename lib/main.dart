@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/firebase_options.dart';
 import 'package:simple_todo_with_latest_widget/router.dart';
@@ -9,8 +9,6 @@ import 'package:simple_todo_with_latest_widget/view/archive_page.dart';
 import 'package:simple_todo_with_latest_widget/view/list_page.dart';
 import 'package:simple_todo_with_latest_widget/view/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
 import 'package:simple_todo_with_latest_widget/model/list.dart';
 
-class ViewModelNotifier extends StateNotifier<List> {
-  ViewModelNotifier() : super(List());
+class RepositoryNotifier extends StateNotifier<List> {
+  RepositoryNotifier() : super(List());
 
   Future<void> add({required String newText}) async {
     // retrieve from CommonFunction
@@ -52,7 +52,7 @@ class ViewModelNotifier extends StateNotifier<List> {
     });
   }
 
-  Future<void> delete(int index) async {
+  Future<void> delete({required int index}) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser!.email)
@@ -70,4 +70,56 @@ class ViewModelNotifier extends StateNotifier<List> {
         .doc(docId)
         .delete();
   }
+
+  Future<void> done({required int index}) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection('list')
+        .orderBy('listOrder')
+        .get();
+
+    final docId = snapshot.docs[index].id;
+    final doc = snapshot.docs[index].data();
+
+    if (doc['check'] == false) {
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.email)
+          .collection('list')
+          .doc(docId)
+          .update({'check': true});
+    } else {
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.email)
+          .collection('list')
+          .doc(docId)
+          .update({'check': false});
+    }
+  }
+
+  Future<void> toArchive({required int index}) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection('list')
+        .orderBy('listOrder')
+        .get();
+
+    final docId = snapshot.docs[index].id;
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection('list')
+        .doc(docId)
+        .update({
+      'done': true,
+      'listOrder': FieldValue.delete(),
+      'archiveDate': DateTime.now(),
+    });
+  }
+
+  // 次アーカイブからリストに戻すのとアーカイブの中で削除（ソートの仕方が違うため別途作る必要がある）
 }
