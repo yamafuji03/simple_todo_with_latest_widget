@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:simple_todo_with_latest_widget/auth.dart';
+import 'package:simple_todo_with_latest_widget/other_func/auth.dart';
 
 import 'package:simple_todo_with_latest_widget/model/list.dart';
 

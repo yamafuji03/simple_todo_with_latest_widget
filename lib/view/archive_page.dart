@@ -11,8 +11,8 @@ class archivePage extends HookConsumerWidget {
   const archivePage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(repositoryProvider);
-    final viewModelNotifier = ref.watch(repositoryProvider.notifier);
+    final viewModelState = ref.watch(crudProvider);
+    final viewModelNotifier = ref.watch(crudProvider.notifier);
 
     final asyncValue = ref.watch(archivePageProvider);
 

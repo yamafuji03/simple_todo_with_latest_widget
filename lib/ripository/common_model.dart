@@ -13,7 +13,7 @@ class CommonFunction {
         .id;
   }
 
-  static Future<int> listOrderLength() async {
+  static Future<int> getListOrderLength() async {
     final snapshot = await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser!.email)

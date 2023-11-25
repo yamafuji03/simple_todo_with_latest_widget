@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:simple_todo_with_latest_widget/firebase_options.dart';
-import 'package:simple_todo_with_latest_widget/router.dart';
+import 'package:simple_todo_with_latest_widget/ripository/firebase_options.dart';
+import 'package:simple_todo_with_latest_widget/other_func/router.dart';
 import 'package:simple_todo_with_latest_widget/view/account_page.dart';
 import 'package:simple_todo_with_latest_widget/view/archive_page.dart';
 import 'package:simple_todo_with_latest_widget/view/list_page.dart';

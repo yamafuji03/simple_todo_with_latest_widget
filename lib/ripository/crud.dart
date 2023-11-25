@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
 import 'package:simple_todo_with_latest_widget/model/list.dart';
 
-class RepositoryNotifier extends StateNotifier<List> {
-  RepositoryNotifier() : super(List());
+class CrudNotifier extends StateNotifier<List> {
+  CrudNotifier() : super(List());
 
   final _firestore = FirebaseFirestore.instance
       .collection('user')
@@ -15,7 +15,7 @@ class RepositoryNotifier extends StateNotifier<List> {
   Future<void> add({required String newText}) async {
     // retrieve from CommonFunction
     final _randomId = CommonFunction.makeRandomId();
-    final _listOrder = await CommonFunction.listOrderLength();
+    final _listOrder = await CommonFunction.getListOrderLength();
 
     _firestore.doc(_randomId).set(state
         .copyWith(
