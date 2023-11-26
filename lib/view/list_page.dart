@@ -110,7 +110,7 @@ class ListPage extends HookConsumerWidget {
                           if (index != docCount) {
                             // docCountは１始まり、カウンタ変数は0始まりだからマイナス１で帳尻合わせ
                             for (int i = 0; i <= docCount - 1; i = i + 1) {
-                              FirebaseFirestore.instance
+                              await FirebaseFirestore.instance
                                   .collection('user')
                                   .doc(FirebaseAuth.instance.currentUser!.email)
                                   .collection('list')
