@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:simple_todo_with_latest_widget/ripository/other_func/auth.dart';
+import 'package:simple_todo_with_latest_widget/auth/auth.dart';
 
 import 'package:simple_todo_with_latest_widget/model/list.dart';
 
@@ -14,7 +14,7 @@ class LoginPage extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LOG Page'),
+        title: Text('Login Page'),
       ),
       body: Center(
         child: Column(
@@ -24,7 +24,7 @@ class LoginPage extends HookWidget {
             SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () async {
-                  await signInWithGoogle();
+                  await Authentication.signInWithGoogle();
                   // initial list
                   await FirebaseFirestore.instance
                       .collection('user')
@@ -34,8 +34,6 @@ class LoginPage extends HookWidget {
                     'uid': FirebaseAuth.instance.currentUser!.uid,
                     'email': FirebaseAuth.instance.currentUser!.email,
                   });
-                  // final randomId =
-                  //   common  makeRandomId(FirebaseAuth.instance.currentUser!);
 
                   final newList = List(
                     item: 'テスト',

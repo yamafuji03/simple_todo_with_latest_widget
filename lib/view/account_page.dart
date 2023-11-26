@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:simple_todo_with_latest_widget/ripository/other_func/auth.dart';
+import 'package:simple_todo_with_latest_widget/auth/auth.dart';
 
 class accountPage extends HookConsumerWidget {
   const accountPage({super.key});
@@ -51,7 +51,7 @@ class accountPage extends HookConsumerWidget {
                   ),
                   onPressed: () async {
                     // sign out from firebase
-                    await signOut();
+                    await Authentication.signOut();
                     context.go('/LoginPage');
                   },
                 ),
@@ -137,7 +137,8 @@ Your all lists will be deleted.'''),
                                                             .currentUser!
                                                             .email)
                                                         .delete();
-                                                    await signOut();
+                                                    await Authentication
+                                                        .signOut();
                                                     context.go('/LoginPage');
                                                   }
                                                 },
