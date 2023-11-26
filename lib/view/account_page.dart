@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:simple_todo_with_latest_widget/other_func/auth.dart';
+import 'package:simple_todo_with_latest_widget/ripository/other_func/auth.dart';
 
 class accountPage extends HookConsumerWidget {
   const accountPage({super.key});

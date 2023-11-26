@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/view_model/main_provider.dart';
+import 'package:simple_todo_with_latest_widget/view_model/crud_provider.dart';
 import 'package:simple_todo_with_latest_widget/view_model/stream_provider.dart';
 
 class archivePage extends HookConsumerWidget {
   const archivePage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(crudProvider);
-    final viewModelNotifier = ref.watch(crudProvider.notifier);
+    final crudState = ref.watch(crudProvider);
+    final crudNotifier = ref.watch(crudProvider.notifier);
 
     final asyncValue = ref.watch(archivePageProvider);
 
@@ -46,13 +46,12 @@ class archivePage extends HookConsumerWidget {
                       ),
                       onDismissed: (direction) async {
                         // swipe left to right. return to List Page
-                        viewModelNotifier.toList(index: index);
+                        crudNotifier.toList(index: index);
 
                         // スワイプ方向が左から右の場合の処理
                         if (direction == DismissDirection.endToStart) {
                           // swipe right to left for delete the list
-                          await viewModelNotifier.deleteFromArchive(
-                              index: index);
+                          await crudNotifier.deleteFromArchive(index: index);
                         }
                       },
                       child: Card(
@@ -70,8 +69,7 @@ class archivePage extends HookConsumerWidget {
                                       color: Colors.blue.shade500)
                                   : Icon(Icons.check),
                               onPressed: () {
-                                viewModelNotifier.checkFromArchive(
-                                    index: index);
+                                crudNotifier.checkFromArchive(index: index);
                               },
                             ),
                           ]),
