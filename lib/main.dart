@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/firebase_options.dart';
-import 'package:simple_todo_with_latest_widget/page/account_page.dart';
-import 'package:simple_todo_with_latest_widget/page/archive_page.dart';
-import 'package:simple_todo_with_latest_widget/page/list_page.dart';
-import 'package:simple_todo_with_latest_widget/page/login_page.dart';
+import 'package:simple_todo_with_latest_widget/ripository/other_func/router.dart';
+import 'package:simple_todo_with_latest_widget/view/account_page.dart';
+import 'package:simple_todo_with_latest_widget/view/archive_page.dart';
+import 'package:simple_todo_with_latest_widget/view/list_page.dart';
+import 'package:simple_todo_with_latest_widget/view/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:simple_todo_with_latest_widget/view_model/login_page_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
