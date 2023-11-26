@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_todo_with_latest_widget/view_model/main_provider.dart';
+import 'package:simple_todo_with_latest_widget/view_model/crud_provider.dart';
+
 import 'package:simple_todo_with_latest_widget/view_model/order_provider.dart';
 import 'package:simple_todo_with_latest_widget/view_model/stream_provider.dart';
 
@@ -13,8 +14,8 @@ class ListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModelState = ref.watch(crudProvider);
-    final viewModelNotifier = ref.watch(crudProvider.notifier);
+    final crudState = ref.watch(crudProvider);
+    final crudNotifier = ref.watch(crudProvider.notifier);
     String newText = '';
 
     final asyncValue = ref.watch(listPageProvider);
@@ -95,7 +96,7 @@ class ListPage extends HookConsumerWidget {
                       onDismissed: (direction) async {
                         // swipe from right to left. throw away list
                         if (direction == DismissDirection.endToStart) {
-                          await viewModelNotifier.deleteFromList(index: index);
+                          await crudNotifier.deleteFromList(index: index);
 
                           // documentの個数をリストで取得
                           List<DocumentSnapshot> listDoc = snapshot.docs;
@@ -109,7 +110,7 @@ class ListPage extends HookConsumerWidget {
                           if (index != docCount) {
                             // docCountは１始まり、カウンタ変数は0始まりだからマイナス１で帳尻合わせ
                             for (int i = 0; i <= docCount - 1; i = i + 1) {
-                              FirebaseFirestore.instance
+                              await FirebaseFirestore.instance
                                   .collection('user')
                                   .doc(FirebaseAuth.instance.currentUser!.email)
                                   .collection('list')
@@ -124,7 +125,7 @@ class ListPage extends HookConsumerWidget {
                         }
                         // swipe from left to right. archive
                         if (direction == DismissDirection.startToEnd) {
-                          viewModelNotifier.toArchive(index: index);
+                          crudNotifier.toArchive(index: index);
                         }
                       },
                       child: Card(
@@ -165,11 +166,9 @@ class ListPage extends HookConsumerWidget {
                                                     child: Text("OK"),
                                                     onPressed: () {
                                                       if (newText != "") {
-                                                        viewModelNotifier
-                                                            .upDate(
-                                                                newText:
-                                                                    newText,
-                                                                index: index);
+                                                        crudNotifier.upDate(
+                                                            newText: newText,
+                                                            index: index);
                                                       }
                                                       ;
                                                       context.pop();
@@ -184,7 +183,7 @@ class ListPage extends HookConsumerWidget {
                                         color: Colors.blue.shade500)
                                     : Icon(Icons.check),
                                 onPressed: () {
-                                  viewModelNotifier.checkFromList(index: index);
+                                  crudNotifier.checkFromList(index: index);
                                 },
                               ),
                             ],
@@ -218,7 +217,7 @@ class ListPage extends HookConsumerWidget {
                       TextButton(
                         child: Text("OK"),
                         onPressed: () {
-                          viewModelNotifier.add(newText: newText);
+                          crudNotifier.add(newText: newText);
                           context.pop();
                         },
                       ),
