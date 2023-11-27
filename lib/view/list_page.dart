@@ -125,7 +125,7 @@ class ListPage extends HookConsumerWidget {
                         }
                         // swipe from left to right. archive
                         if (direction == DismissDirection.startToEnd) {
-                          crudNotifier.toArchive(index: index);
+                          await crudNotifier.toArchive(index: index);
                         }
                       },
                       child: Card(

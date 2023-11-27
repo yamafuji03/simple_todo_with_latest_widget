@@ -25,7 +25,7 @@ class CrudNotifier extends StateNotifier<List> {
           done: false,
           createdAt: DateTime.now(),
           check: false,
-          archiveDate: DateTime.now(),
+          archiveDate: null,
         )
         .toJson());
   }
@@ -100,7 +100,9 @@ class CrudNotifier extends StateNotifier<List> {
         .get();
     final docId = _snapshot.docs[index].id;
 
-    _firestore.doc(docId).update({'listOrder': 0, 'done': false});
+    _firestore
+        .doc(docId)
+        .update({'listOrder': 0, 'done': false, 'archiveDate': null});
   }
 
   Future<void> deleteFromArchive({required int index}) async {

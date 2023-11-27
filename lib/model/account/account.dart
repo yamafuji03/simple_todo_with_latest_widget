@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:simple_todo_with_latest_widget/model/date_converter.dart';
+
 part 'account.freezed.dart';
 part 'account.g.dart';
 
