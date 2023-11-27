@@ -5,7 +5,6 @@ String firstPage() {
   if (FirebaseAuth.instance.currentUser == null) {
     return '/LoginPage';
   } else {
-    return '/ListPage'; //ある程度作ったら、'/ListPage'　に切り変える
-    // return '/LoginPage';
+    return '/ListPage';
   }
 }

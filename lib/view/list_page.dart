@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_todo_with_latest_widget/view_model/crud_provider.dart';
-
 import 'package:simple_todo_with_latest_widget/view_model/order_provider.dart';
 import 'package:simple_todo_with_latest_widget/view_model/stream_provider.dart';
 
@@ -75,8 +74,6 @@ class ListPage extends HookConsumerWidget {
                   // orderFunc
                   orderNotifier.order(oldIndex: oldIndex, newIndex: newIndex);
                 },
-
-                // ここのsnapshotはstreamで範囲が狭まれた物を対象としてるからいつもと同じ感じでおｋ
                 itemCount: snapshot.docs.length,
                 itemBuilder: (BuildContext context, int index) {
                   DocumentSnapshot doc = snapshot.docs[index];
@@ -116,7 +113,6 @@ class ListPage extends HookConsumerWidget {
                                   .collection('list')
                                   .doc(listDoc[i]
                                       .id) //ここは１個から全てのドキュメントを更新していくため、
-                                  // 変数doc（指定したドキュメント）「 DocumentSnapshot doc = snapshot.data!.docs[index];」は使用できないため、フルで全部書く
                                   .update({
                                 'listOrder': i,
                               });
@@ -130,7 +126,6 @@ class ListPage extends HookConsumerWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          // それぞのdocumentに入ってるのitemの中身を表示
                           title: Text(doc["item"]),
                           subtitle: Text(
                               '${DateFormat('yyyy/MM/dd HH:mm').format(doc['createdAt'].toDate())}',
@@ -148,9 +143,7 @@ class ListPage extends HookConsumerWidget {
                                         context: context,
                                         builder: (context) {
                                           return AlertDialog(
-                                              // ウインドウ左上に表示させるもの
                                               title: Text("Edit mode"),
-                                              // 内容入力
                                               content: TextField(
                                                 onChanged: (text) {
                                                   newText = text;
@@ -196,7 +189,6 @@ class ListPage extends HookConsumerWidget {
         child: Icon(Icons.add),
         onPressed: () {
           showDialog(
-              // おまじない
               context: context,
               builder: (context) {
                 return AlertDialog(

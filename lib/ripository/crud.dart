@@ -112,6 +112,6 @@ class CrudNotifier extends StateNotifier<List> {
         .get();
     final docId = _snapshot.docs[index].id;
 
-    _firestore.doc(docId).delete();
+    await _firestore.doc(docId).delete();
   }
 }
