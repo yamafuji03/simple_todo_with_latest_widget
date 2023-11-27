@@ -67,7 +67,7 @@ class accountPage extends HookConsumerWidget {
                           // おまじない
                           context: context,
                           builder: (context) {
-                            // might take away Statefulbuilder below when refactoring with riverpod
+           
                             return StatefulBuilder(
                                 builder: (context, setState) {
                               return AlertDialog(
@@ -89,7 +89,7 @@ Your all lists will be deleted.'''),
                                             Checkbox(
                                               value: isChanged,
                                               onChanged: (_) {
-                                                // might take away 　Statefulbuilder when refactoring with riverpod
+                                           
 
                                                 setState(() {
                                                   // to switch on and off
