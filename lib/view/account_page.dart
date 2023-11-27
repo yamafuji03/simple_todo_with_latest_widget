@@ -1,18 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:simple_todo_with_latest_widget/auth/auth.dart';
+import 'package:simple_todo_with_latest_widget/view_model/account_provider.dart';
 
 class accountPage extends HookConsumerWidget {
   const accountPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final accountNotifier = ref.watch(AccountProvider.notifier);
     bool isChanged = false;
     return Scaffold(
       appBar: AppBar(title: Text('Account Page')),
@@ -108,37 +106,9 @@ Your all lists will be deleted.'''),
                                           onPressed: !isChanged
                                               ? null
                                               : () async {
-                                                  // wrap up later with if statement after making switch
-                                                  // delete each of documents in list
                                                   if (isChanged == true) {
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('user')
-                                                        .doc(FirebaseAuth
-                                                            .instance
-                                                            .currentUser!
-                                                            .email)
-                                                        .collection('list')
-                                                        .get()
-                                                        .asStream()
-                                                        .forEach((element) {
-                                                      for (var element
-                                                          in element.docs) {
-                                                        element.reference
-                                                            .delete();
-                                                      }
-                                                    });
-                                                    // delete email document
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('user')
-                                                        .doc(FirebaseAuth
-                                                            .instance
-                                                            .currentUser!
-                                                            .email)
-                                                        .delete();
-                                                    await Authentication
-                                                        .signOut();
+                                                    accountNotifier
+                                                        .deleteAccount();
                                                     context.go('/LoginPage');
                                                   }
                                                 },

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_todo_with_latest_widget/view_model/crud_provider.dart';
@@ -24,15 +23,12 @@ class archivePage extends HookConsumerWidget {
           loading: () => CircularProgressIndicator(),
           data: (snapshot) {
             return ListView.builder(
-
-                // ここのsnapshotはstreamで範囲が狭まれた物を対象としてるからいつもと同じ感じでおｋ
                 itemCount: snapshot.docs.length,
                 itemBuilder: (BuildContext context, int index) {
                   DocumentSnapshot doc = snapshot.docs[index];
                   return Dismissible(
                       // ドキュメントIDの特定し、リストの特定をするdocIDを取得
                       key: Key(doc.id),
-                      // 左から右にスワイプしたときの背景（削除）
                       background: Container(
                         color: Colors.blue,
                         child: Icon(Icons.restore_from_trash),
@@ -55,7 +51,6 @@ class archivePage extends HookConsumerWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          // それぞのdocumentに入ってるのitemの中身を表示
                           title: Text(doc["item"]),
                           subtitle: Text(
                             'Archived at ${DateFormat('yyyy/MM/dd HH:mm').format(doc['archiveDate'].toDate())}',
