@@ -9,14 +9,14 @@ class AccountNotifier extends StateNotifier<Account> {
   AccountNotifier() : super(Account());
 
   Future<void> createAccount() async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('user')
         .doc(FirebaseAuth.instance.currentUser!.email)
         .set(state
             .copyWith(
               registerDate: DateTime.now(),
               uid: FirebaseAuth.instance.currentUser!.uid,
-              email: FirebaseAuth.instance.currentUser!.email,
+              email: FirebaseAuth.instance.currentUser!.email!,
             )
             .toJson());
   }
