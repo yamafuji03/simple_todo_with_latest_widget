@@ -3,15 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:simple_todo_with_latest_widget/auth/auth.dart';
+import 'package:simple_todo_with_latest_widget/model/list/list.dart';
+import 'package:simple_todo_with_latest_widget/ripository/crud.dart';
+import 'package:simple_todo_with_latest_widget/view_model/account_provider.dart';
+import 'package:simple_todo_with_latest_widget/view_model/crud_provider.dart';
 
-import 'package:simple_todo_with_latest_widget/model/list.dart';
-
-class LoginPage extends HookWidget {
+class LoginPage extends HookConsumerWidget {
   const LoginPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountNotifier = ref.watch(AccountProvider.notifier);
+
+    final crudNotifier = ref.watch(crudProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Page'),
@@ -25,34 +31,23 @@ class LoginPage extends HookWidget {
             ElevatedButton(
                 onPressed: () async {
                   await Authentication.signInWithGoogle();
-                  // initial list
-                  await FirebaseFirestore.instance
+
+                  final userData = await FirebaseFirestore.instance
                       .collection('user')
                       .doc(FirebaseAuth.instance.currentUser!.email)
-                      .set({
-                    "registerDate": Timestamp.now(),
-                    'uid': FirebaseAuth.instance.currentUser!.uid,
-                    'email': FirebaseAuth.instance.currentUser!.email,
-                  });
+                      .get();
+                  print(userData);
+                  if (userData.exists) {
+                    context.push('/ListPage');
+                  } else {
+// initial list
+                    await accountNotifier.createAccount();
 
-                  final newList = List(
-                    item: 'テスト',
-                    // id: randomId,
-                    listOrder: 0,
-                    done: false,
-                    check: false,
-                    createdAt: DateTime.now(),
-                    archiveDate: DateTime.now(),
-                  ).toJson();
+                    await crudNotifier.add(newText: 'テスト１');
+                    await crudNotifier.add(newText: 'テスト２');
 
-                  await FirebaseFirestore.instance
-                      .collection('user')
-                      .doc(FirebaseAuth.instance.currentUser!.email)
-                      .collection('list')
-                      .doc()
-                      .set(newList);
-
-                  context.push('/ListPage');
+                    context.push('/ListPage');
+                  }
                 },
                 child: Text('Google Sign In')),
           ],

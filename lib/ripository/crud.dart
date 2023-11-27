@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/model/list/list.dart';
 import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
-import 'package:simple_todo_with_latest_widget/model/list.dart';
 
 class CrudNotifier extends StateNotifier<List> {
   CrudNotifier() : super(List());
@@ -25,7 +25,7 @@ class CrudNotifier extends StateNotifier<List> {
           done: false,
           createdAt: DateTime.now(),
           check: false,
-          archiveDate: DateTime.now(),
+          archiveDate: null,
         )
         .toJson());
   }
@@ -100,7 +100,9 @@ class CrudNotifier extends StateNotifier<List> {
         .get();
     final docId = _snapshot.docs[index].id;
 
-    _firestore.doc(docId).update({'listOrder': 0, 'done': false});
+    _firestore
+        .doc(docId)
+        .update({'listOrder': 0, 'done': false, 'archiveDate': null});
   }
 
   Future<void> deleteFromArchive({required int index}) async {
