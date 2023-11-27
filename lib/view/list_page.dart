@@ -68,7 +68,7 @@ class ListPage extends HookConsumerWidget {
       ),
       body: asyncValue.when(
           error: (error, _) => Text(error.toString()),
-          loading: () => CircularProgressIndicator(),
+          loading: () => Center(child: CircularProgressIndicator()),
           data: (snapshot) {
             return ReorderableListView.builder(
                 onReorder: (int oldIndex, int newIndex) {

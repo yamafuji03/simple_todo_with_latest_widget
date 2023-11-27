@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:simple_todo_with_latest_widget/model/list/list.dart';
 import 'package:simple_todo_with_latest_widget/ripository/common_model.dart';
-import 'package:simple_todo_with_latest_widget/model/list.dart';
 
 class CrudNotifier extends StateNotifier<List> {
   CrudNotifier() : super(List());
