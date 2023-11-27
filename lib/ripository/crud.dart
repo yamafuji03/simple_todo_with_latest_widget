@@ -8,8 +8,7 @@ class CrudNotifier extends StateNotifier<List> {
   CrudNotifier() : super(List());
 
   final _firestore = FirebaseFirestore.instance.collection('user');
-  // .doc(FirebaseAuth.instance.currentUser?.email)
-  // .collection('list');
+
 
   Future<void> add({required String newText}) async {
     // retrieve from CommonFunction
